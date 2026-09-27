@@ -1,0 +1,13 @@
+{
+  "name": "nuestra-aventura-bienvenida",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nuestra aventura: bienvenida, fecha, recuerdos, Laberinto del amor y premio.",
+  "scripts": {
+    "dev": "node preview.mjs",
+    "dev:prize": "node preview.mjs --prize-fixture",
+    "dev:game": "node preview.mjs --prize-fixture",
+    "check": "node --check dist/config.js && node --check dist/app.js && node --check dist/whatsapp.js && node --check dist/memory-tools.js && node --check dist/part2.js && node --check dist/gallery-tools.js && node --check dist/part3.js && node --check dist/memorama-tools.js && node --check dist/part3-memorama.js && node --check dist/maze-engine.js && node --check dist/part4.js && node --check dist/prize-tools.js && node --check dist/part5.js && node --check dist/platform-engine.js && node --check dist/part5-mensaje.js && node --check dist/flappy-engine.js && node --check dist/part6-flappy.js && node --check dist/part7-final.js && node --check dist/summary-image.js && node --check dist/sounds.js && node --check tests/fixtures/finish-game.js && node --check preview.mjs",
+    "test": "node --test tests/*.test.cjs"
+  }
+}
