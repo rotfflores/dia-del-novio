@@ -8,29 +8,14 @@
     <title>Tú + yo · Nuestra aventura</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23b62d51'/%3E%3Cpath d='M8 8h6v4h4V8h6v4h4v8h-4v4h-4v4h-8v-4H8v-4H4v-8h4z' transform='translate(3 2) scale(.8)' fill='%23ffe9ed'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./maze.css" />
-    <link rel="stylesheet" href="./mensaje.css" />
-    <link rel="stylesheet" href="./flappy.css" />
-    <link rel="stylesheet" href="./final.css" />
     <script src="./config.js" defer></script>
     <script src="./prize-tools.js" defer></script>
     <script src="./app.js" defer></script>
-    <script src="./whatsapp.js" defer></script>
     <script src="./memory-tools.js" defer></script>
     <script src="./part2.js" defer></script>
     <script src="./gallery-tools.js" defer></script>
-    <script src="./memorama-tools.js" defer></script>
-    <script src="./part3-memorama.js" defer></script>
-    <script src="./maze-engine.js" defer></script>
-    <script src="./part4.js" defer></script>
+    <script src="./part3.js" defer></script>
     <script src="./part5.js" defer></script>
-    <script src="./platform-engine.js" defer></script>
-    <script src="./part5-mensaje.js" defer></script>
-    <script src="./flappy-engine.js" defer></script>
-    <script src="./part6-flappy.js" defer></script>
-    <script src="./summary-image.js" defer></script>
-    <script src="./part7-final.js" defer></script>
-    <script src="./sounds.js" defer></script>
   </head>
   <body>
     <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -97,7 +82,7 @@
               <p class="couple-names"><span id="her-name">[Nombre de ella]</span><span class="names-plus" aria-label="más">+</span><span id="his-name">[Nombre de él]</span></p>
             </div>
             <h1 id="welcome-title" class="entrance" style="--delay: 400ms" tabindex="-1">Nuestra aventura <em>comienza aquí</em></h1>
-            <p class="welcome-message entrance" data-text="message" style="--delay: 550ms">Preparé algo especial para celebrar este día contigo. ¿Estás lista?</p>
+            <p class="welcome-message entrance" data-text="message" style="--delay: 550ms">Preparé algo especial para celebrar este día contigo. ¿Estás listo?</p>
             <div class="start-area entrance" style="--delay: 690ms">
               <div class="button-wrap">
                 <button type="button" id="start-button" class="primary-button"><span data-text="button">Comenzar nuestra aventura ❤️</span><svg class="button-arrow" aria-hidden="true" focusable="false"><use href="#arrow-up-right" /></svg></button>
@@ -110,11 +95,11 @@
 
         <section id="next-part" class="memory-part" aria-labelledby="next-title" hidden></section>
         <section id="part-three" class="gallery-part" aria-labelledby="part-three-title" hidden></section>
-        <section id="part-four" class="maze-part" aria-labelledby="part-four-title" hidden></section>
+        <!-- Punto de conexión: el juego de la parte 4 aún no está implementado. -->
+        <section id="part-four" class="next-part" aria-labelledby="part-four-title" hidden></section>
         <section id="part-five" class="prize-part" aria-labelledby="part-five-title" hidden></section>
         <!-- Entrada preparada; la carta de la parte 6 todavía no tiene contenido. -->
         <section id="part-six" class="next-part" aria-labelledby="part-six-title" hidden></section>
-        <section id="part-seven" class="final-part" aria-labelledby="part-seven-title" hidden></section>
         <p id="screen-reader-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
         <noscript><p class="noscript-message">Activa JavaScript para comenzar nuestra aventura.</p></noscript>
       </main>
