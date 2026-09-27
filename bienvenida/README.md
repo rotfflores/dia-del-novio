@@ -1,10 +1,22 @@
 # Nuestra aventura · Día del Novio
 
-Partes **1, 2, 3 y 5 de 7**, integradas en HTML, CSS y JavaScript. Sin dependencias, fuentes externas ni música. `dist` contiene el código fuente listo para abrir; no necesita compilación. Se conservaron los nombres Estefania y Obed y la foto real existente. **La parte 4 aún es un reservado: no existe el juego en este proyecto.** La parte 5 está lista para recibir su resultado y la parte 6 tiene solo una entrada, sin carta.
+Experiencia interactiva integrada en HTML, CSS y JavaScript. `dist` contiene el código listo para abrir; no necesita compilación. Los nombres y la foto real de la pareja se configuran por separado de la portada pública para compartir.
 
 ## Abrir
 
 Abre `dist/index.html` directamente en un navegador. También puedes ejecutar `npm run dev` desde esta carpeta y visitar `http://127.0.0.1:4173`. No necesitas ejecutar `npm install`.
+
+## Portada al compartir el enlace
+
+`dist/assets/portada-whatsapp.jpg` es una portada horizontal de **1200 × 630 px**, sin nombres ni foto de la pareja. `dist/index.html` ya incluye el título, la descripción y las etiquetas Open Graph y Twitter necesarias para la vista previa. La portada no cambia los datos privados que aparecen dentro de la experiencia.
+
+Para que WhatsApp muestre la imagen al compartir **el enlace de la página**, publícala en una URL HTTPS accesible para cualquier persona. Con esa dirección pública, ejecuta desde esta carpeta:
+
+```sh
+node scripts/preparar-compartir.mjs https://tu-dominio.com/
+```
+
+El comando escribe las URLs absolutas de la portada en `og:image` y `twitter:image`, y la URL de la página en `og:url`. Después publica de nuevo el contenido de `dist`. Si la página está en una subruta, pasa la URL exacta de la página (por ejemplo, `https://tu-dominio.com/aventura/`). `localhost` y una página privada no pueden generar una vista previa en WhatsApp. La imagen puede enviarse directamente como archivo aunque la página aún no esté publicada.
 
 ## Personalizar: todo en `dist/config.js`
 
@@ -77,24 +89,9 @@ La descripción siguiente corresponde a la galería anterior. Las tarjetas puede
 
 Las fotos se cargan al abrir la tarjeta. La frase, la fecha y el lugar quedan fuera de la imagen. En celular hay una columna amplia; en pantallas mayores, dos o tres columnas. Todos los iconos son SVG locales y las animaciones respetan el movimiento reducido.
 
-## Entrada preparada para la parte 4
+## Parte 4: Laberinto del amor
 
-Al descubrir todos los recuerdos aparece **¡Vamos a jugar!**. La parte 4 conserva **Continuará…** y el botón para volver a la galería. El juego sigue pendiente; la parte 5 recibe la finalización mediante `completeGame`. La navegación normal no inventa una partida ni una puntuación.
-
-Cuando construyas la parte 4, carga su script después de `part3.js` y registra el contenido:
-
-```js
-Aventura.registerPart4((container, { config, goToPart3, completeGame, icon, renderText }) => {
-  // Construye aquí el juego de la parte 4.
-  // Incluye un h2 con id="part-four-title".
-  // Usa container.replaceChildren(...) para reemplazar el reservado.
-  // goToPart3() regresa a la galería con el progreso conservado.
-  // Al terminar una partida real, llama UNA VEZ:
-  // await completeGame({ score: aciertos, maxScore: totalPreguntas });
-  // No compruebes una puntuación mínima: incluso 0 desbloquea el regalo.
-  // Si usas temporizadores o listeners globales, devuelve una función de limpieza.
-});
-```
+Al descubrir todos los recuerdos aparece **¡Vamos a jugar!**. Se abre el laberinto real de `dist/part4.js` y `dist/maze-engine.js`: recoge corazones durante una partida de hasta 60 segundos, esquiva los malentendidos y usa el corazón grande para obtener protección temporal. Funciona con flechas, WASD y controles táctiles; incluye pausa, reinicio, tres vidas, sonidos opcionales y récord local. Al terminar, **Reclamar mi premio** pasa la puntuación a la parte 5 sin exigir un mínimo. `npm run dev:game` permite abrirlo directamente en `http://127.0.0.1:4174/?preview=game`.
 
 API en `dist/app.js`:
 
@@ -124,9 +121,9 @@ Cambiar `type` basta para usar otro formato: no hace falta rehacer HTML ni CSS. 
 
 La caja se abre con toque, mouse, Enter o Espacio. Las animaciones respetan el movimiento reducido. El regalo permanece abierto al volver desde la parte 6 y después de jugar otra vez. Los resultados y el récord se guardan **en memoria mientras la página está abierta**, igual que el progreso de las partes anteriores; recargar reinicia la visita.
 
-### Conectar el juego y la carta
+### Navegación del juego y la carta
 
-El juego debe llamar `await Aventura.completeGame({ score: aciertos, maxScore: totalPreguntas })` al terminar. También recibe `completeGame` en su contexto de renderizado. Solo se acepta desde la parte 4 sin una transición activa; ambos valores deben ser enteros, con `0 <= score <= maxScore` y `maxScore > 0`. Se registra la partida y se abre la parte 5; **cero puntos también basta**. Si cambia el total de preguntas, el récord compara la proporción de aciertos.
+El laberinto llama `await Aventura.completeGame({ score, maxScore })` al reclamar el premio. Solo se acepta desde la parte 4 sin una transición activa; ambos valores deben ser enteros, con `0 <= score <= maxScore` y `maxScore > 0`. Se registra la partida y se abre la parte 5; **cero puntos también basta**.
 
 - `Aventura.getPrizeState()`: vista de solo lectura de `lastResult`, `bestResult`, `roundNumber`, `unlocked` y `opened`.
 - `Aventura.restartGame()`: desde el regalo abierto, limpia y vuelve a montar únicamente la parte 4. Conserva el regalo y el récord.
@@ -134,7 +131,7 @@ El juego debe llamar `await Aventura.completeGame({ score: aciertos, maxScore: t
 - `Aventura.goToPart6()`: solo avanza desde 5 cuando la caja está abierta.
 - `Aventura.registerPart6(renderer)`: entrada para la futura carta. Incluye un `h2` con `id="part-six-title"`. Recibe `goToPart5` para volver al regalo. Actualmente muestra únicamente **Continuará…**.
 
-### Revisar el premio mientras falta el juego
+### Revisar el premio directamente
 
 Ejecuta **`npm run dev:prize`** y abre **`http://127.0.0.1:4174`**. Recorre bienvenida, fecha y recuerdos. En la parte 4 aparecerá un control de prueba claramente identificado que simula partidas de 0, 3 o 5 puntos; sirve para comprobar apertura, repetición y récord. No es un juego y no se incluye en `dist`, en `npm run dev` ni al abrir `dist/index.html`.
 
