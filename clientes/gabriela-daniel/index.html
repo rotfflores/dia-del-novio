@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#faf7f2" />
+    <meta name="description" content="Preparé algo especial para celebrar este día contigo. Nuestra aventura comienza aquí." />
+    <link rel="canonical" href="https://dia-del-novio.rotfstudio.com/clientes/gabriela-daniel/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content="Nuestra aventura comienza aquí" />
+    <meta property="og:description" content="Una historia para descubrir, recordar y jugar juntos. Feliz Día del Novio." />
+    <meta property="og:image" content="https://dia-del-novio.rotfstudio.com/clientes/gabriela-daniel/assets/portada-whatsapp.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Portada ilustrada de Nuestra aventura comienza aquí: un corazón rojo con un laberinto sobre papel rosado." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nuestra aventura comienza aquí" />
+    <meta name="twitter:description" content="Una historia para descubrir, recordar y jugar juntos. Feliz Día del Novio." />
+    <meta name="twitter:image" content="https://dia-del-novio.rotfstudio.com/clientes/gabriela-daniel/assets/portada-whatsapp.jpg" />
+    <title>Gabriela + Daniel · Nuestra aventura</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23b62d51'/%3E%3Cpath d='M8 8h6v4h4V8h6v4h4v8h-4v4h-4v4h-8v-4H8v-4H4v-8h4z' transform='translate(3 2) scale(.8)' fill='%23ffe9ed'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css?v=20261002-gd2" />
+    <link rel="stylesheet" href="./maze.css?v=20261002-gd2" />
+    <link rel="stylesheet" href="./mensaje.css?v=20261002-gd2" />
+    <link rel="stylesheet" href="./flappy.css?v=20261002-gd2" />
+    <link rel="stylesheet" href="./final.css?v=20261002-gd2" />
+    <script src="./config.js?v=20261002-gd2" defer></script>
+    <script src="./prize-tools.js?v=20261002-gd2" defer></script>
+    <script src="./app.js?v=20261002-gd2" defer></script>
+    <script src="./whatsapp.js?v=20261002-gd2" defer></script>
+    <script src="./memory-tools.js?v=20261002-gd2" defer></script>
+    <script src="./part2.js?v=20261002-gd2" defer></script>
+    <script src="./gallery-tools.js?v=20261002-gd2" defer></script>
+    <script src="./memorama-tools.js?v=20261002-gd2" defer></script>
+    <script src="./part3-memorama.js?v=20261002-gd2" defer></script>
+    <script src="./maze-engine.js?v=20261002-gd2" defer></script>
+    <script src="./part4.js?v=20261002-gd2" defer></script>
+    <script src="./part5.js?v=20261002-gd2" defer></script>
+    <script src="./platform-engine.js?v=20261002-gd2" defer></script>
+    <script src="./part5-mensaje.js?v=20261002-gd2" defer></script>
+    <script src="./flappy-engine.js?v=20261002-gd2" defer></script>
+    <script src="./part6-flappy.js?v=20261002-gd2" defer></script>
+    <script src="./summary-image.js?v=20261002-gd2" defer></script>
+    <script src="./part7-final.js?v=20261002-gd2" defer></script>
+    <script src="./sounds.js?v=20261002-gd2" defer></script>
+    <script src="./soundtrack.js?v=20261002-gd2" defer></script>
+  </head>
+  <body>
+    <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <symbol id="chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="arrow-left" viewBox="0 0 24 24"><path d="M20 12H4m6 6-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="replay" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 0 5M4 4v6h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="heart-filled" viewBox="0 0 24 24"><path d="M12 21 3.3 12.5C-3 6.2 5.3-2 12 5.2 18.7-2 27 6.2 20.7 12.5Z" fill="currentColor" /></symbol>
+        <symbol id="swipe" viewBox="0 0 24 24"><path d="M3 7h18M6 4 3 7l3 3m12-6 3 3-3 3M8 21l-3-5a2 2 0 0 1 3-2l2 2v-5a2 2 0 0 1 4 0v3l2-1 4 2v4l-1 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+        <symbol id="eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.6" /><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6" /></symbol>
+        <symbol id="pixel-heart" viewBox="0 0 24 24">
+          <path d="M3 3h6v3h6V3h6v3h3v9h-3v3h-3v3h-3v3H9v-3H6v-3H3v-3H0V6h3z" fill="currentColor" />
+        </symbol>
+        <symbol id="sparkle" viewBox="0 0 24 24">
+          <path d="M12 2c0 6-4 10-10 10 6 0 10 4 10 10 0-6 4-10 10-10-6 0-10-4-10-10Z" fill="currentColor" />
+        </symbol>
+        <symbol id="heart-outline" viewBox="0 0 24 24">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="wordmark" aria-label="Tú más yo">
+          <span class="brand-icon"><svg aria-hidden="true"><use href="#pixel-heart" /></svg></span>
+          <span>tú <i>+</i> yo<span class="wordmark-dot">.</span></span>
+        </div>
+        <div class="occasion"><span class="occasion-line" aria-hidden="true"></span><span data-text="occasion">Día del Novio</span></div>
+      </header>
+
+      <main id="main-content">
+        <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+          <div class="photo-scene entrance" style="--delay: 60ms">
+            <span class="photo-orbit orbit-one" aria-hidden="true"><svg><use href="#sparkle" /></svg></span>
+            <span class="photo-orbit orbit-two" aria-hidden="true"><svg><use href="#sparkle" /></svg></span>
+            <span class="photo-orbit orbit-three" aria-hidden="true">+</span>
+            <div class="photo-backing" aria-hidden="true"></div>
+            <figure class="photo-card">
+              <div class="photo-window">
+                <div id="photo-placeholder" class="photo-placeholder">
+                  <div class="placeholder-border" aria-hidden="true"></div>
+                  <div class="placeholder-emblem" aria-hidden="true"><svg><use href="#heart-outline" /></svg><span>+</span></div>
+                  <p data-text="placeholderTitle">Nuestra foto favorita</p>
+                  <span data-text="placeholderMessage">Este espacio es para nosotros.</span>
+                  <span class="placeholder-coordinate" data-text="placeholderMemory" aria-hidden="true">TÚ & YO · RECUERDO 001</span>
+                </div>
+                <img id="couple-photo" class="couple-photo" alt="Nuestra foto favorita juntos" hidden decoding="async" fetchpriority="high" />
+              </div>
+              <figcaption>
+                <span data-text="photoCaption">Mi lugar favorito siempre será contigo.</span>
+                <svg aria-hidden="true"><use href="#heart-outline" /></svg>
+              </figcaption>
+            </figure>
+            <span class="photo-tag" aria-hidden="true"><svg><use href="#pixel-heart" /></svg><span data-text="photoTag">MI PERSONA FAVORITA</span></span>
+          </div>
+
+          <div class="welcome-copy">
+            <div class="couple-intro entrance" style="--delay: 240ms">
+              <p class="eyebrow" data-text="eyebrow">Una historia, dos protagonistas</p>
+              <p class="couple-names"><span id="her-name">[Nombre de ella]</span><span class="names-plus" aria-label="más">+</span><span id="his-name">[Nombre de él]</span></p>
+            </div>
+            <h1 id="welcome-title" class="entrance" style="--delay: 400ms" tabindex="-1">Nuestra aventura <em>comienza aquí</em></h1>
+            <p class="welcome-message entrance" data-text="message" style="--delay: 550ms">Preparé algo especial para celebrar este día contigo. ¿Estás listo?</p>
+            <div class="start-area entrance" style="--delay: 690ms">
+              <div class="button-wrap">
+                <button type="button" id="start-button" class="primary-button"><span data-text="button">Comenzar nuestra aventura ❤️</span><svg class="button-arrow" aria-hidden="true" focusable="false"><use href="#arrow-up-right" /></svg></button>
+                <div id="heart-particles" class="heart-particles" aria-hidden="true"></div>
+              </div>
+              <p class="start-note"><svg aria-hidden="true"><use href="#sparkle" /></svg><span data-text="startNote">El primer capítulo de algo bonito</span></p>
+            </div>
+          </div>
+        </section>
+
+        <section id="next-part" class="memory-part" aria-labelledby="next-title" hidden></section>
+        <section id="part-three" class="gallery-part" aria-labelledby="part-three-title" hidden></section>
+        <section id="part-four" class="maze-part" aria-labelledby="part-four-title" hidden></section>
+        <section id="part-five" class="prize-part" aria-labelledby="part-five-title" hidden></section>
+        <!-- Entrada preparada; la carta de la parte 6 todavía no tiene contenido. -->
+        <section id="part-six" class="next-part" aria-labelledby="part-six-title" hidden></section>
+        <section id="part-seven" class="final-part" aria-labelledby="part-seven-title" hidden></section>
+        <p id="screen-reader-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+        <noscript><p class="noscript-message">Activa JavaScript para comenzar nuestra aventura.</p></noscript>
+      </main>
+
+      <footer class="site-footer">
+        <div class="made-with-love"><svg aria-hidden="true"><use href="#heart-outline" /></svg><span data-text="footnote">Hecho con amor, solo para ti</span></div>
+        <div class="journey-progress" aria-label="Progreso de nuestra aventura">
+          <span id="progress-label">Parte 1 de 7</span>
+          <ol id="progress-steps" class="progress-steps" aria-label="Partes de la aventura"></ol>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

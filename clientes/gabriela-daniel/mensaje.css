@@ -1,0 +1,111 @@
+/* Parte 5 · "Arma el mensaje". Estilos aislados, con la paleta y el papel del resto de la página. */
+.message-part { padding: 35px 0 30px; }
+.message-intro { text-align: center; margin-bottom: 20px; }
+.message-intro h2 { margin: 12px 0 14px; font: 400 clamp(2.4rem, 5vw, 3.8rem)/1.1 var(--serif); color: var(--cherry); letter-spacing: -.045em; }
+.message-instruction { max-width: 520px; margin: 0 auto; color: var(--muted); font-size: .9375rem; line-height: 1.7; text-wrap: pretty; }
+
+.message-phrase { max-width: 680px; margin: 0 auto 18px; text-align: center; }
+.message-slots { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.message-slot { min-width: calc(var(--chars) * .62em + 20px); min-height: 38px; padding: 6px 10px; border: 1px dashed #d4a6b5; border-radius: 8px; background: #fffaf5; color: var(--cherry-dark); font: italic 400 1.15rem/1.4 var(--serif); }
+.message-slot:not(.is-filled)::before { content: ""; display: block; height: 1px; margin-top: 18px; background: repeating-linear-gradient(90deg, #cf9aab 0 4px, transparent 4px 8px); }
+.message-slot.is-filled { border-style: solid; border-color: #d9a3b3; background: #fbe8ee; box-shadow: 0 3px 0 #efd3db; animation: message-slot-pop 420ms cubic-bezier(.2,.7,.3,1) both; }
+.message-counter { margin: 12px 0 0; color: #85445b; font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; }
+@keyframes message-slot-pop { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+
+.message-session { width: min(100%, 680px); margin: 0 auto; padding: 12px; border: 1px solid #d9b3c0; border-radius: 19px; background: #fffaf5; box-shadow: 0 6px 0 #e9d8d4, 0 18px 45px #6b314210; }
+.message-stage { position: relative; }
+.message-canvas { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; background: #fbe7ed; outline-offset: 3px; touch-action: none; }
+.message-canvas:focus-visible { outline: 3px solid var(--cherry); }
+.message-toast { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 20px); margin: 0; padding: 7px 14px; border: 1px solid #d9a3b3; border-radius: 999px; background: #fffdfb; color: var(--cherry-dark); font-size: .8125rem; font-weight: 600; text-align: center; box-shadow: 0 3px 0 #efd3db; pointer-events: none; animation: message-toast 260ms ease both; }
+@keyframes message-toast { from { opacity: 0; transform: translate(-50%, -6px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+.message-overlay { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; padding: 14px; background: #faf7f2c4; border-radius: 10px; }
+.message-panel { width: min(100%, 360px); padding: 22px 22px 24px; border: 1px solid #d8adbb; border-radius: 12px; background: #fffaf5; text-align: center; box-shadow: 0 5px 0 #edd7dc, 0 18px 40px #6b314211; }
+.message-panel-icon { display: block; width: 28px; margin: 0 auto 12px; color: var(--cherry); }
+.message-panel-icon svg { width: 28px; height: 28px; }
+.message-panel h3 { margin: 0 0 10px; font: italic 400 1.9rem/1.15 var(--serif); letter-spacing: -.035em; color: var(--cherry-dark); outline: none; }
+.message-panel p { margin: 0 0 18px; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+.message-panel .primary-button { min-height: 50px; padding: 12px 20px; }
+.message-final { margin: 6px 0 20px; color: var(--cherry); font: italic 400 clamp(1.35rem, 4.5vw, 1.8rem)/1.35 var(--serif); letter-spacing: -.02em; text-wrap: balance; }
+.message-win:not([hidden]) { animation: message-slot-pop 480ms cubic-bezier(.2,.7,.3,1) both; }
+
+.message-controls { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 4px 2px; user-select: none; -webkit-user-select: none; }
+.message-pad { display: flex; gap: 8px; }
+.message-controls button { display: grid; place-items: center; min-width: 64px; min-height: 56px; padding: 0 14px; border: 1px solid #c39baa; border-radius: 12px; color: var(--cherry-dark); background: #f7e6eb; box-shadow: 0 3px 0 #dfbdc8; touch-action: none; }
+.message-controls button svg { width: 24px; height: 24px; }
+.message-controls .message-jump { display: flex; gap: 6px; min-width: 120px; font-size: .875rem; font-weight: 650; background: #f4d3dd; }
+.message-controls button.is-pressed { transform: translateY(2px); box-shadow: 0 1px 0 #dfbdc8; background: #edc5d2; }
+.message-guide { max-width: 560px; margin: 22px auto 0; color: var(--muted); font-size: .8125rem; line-height: 1.7; text-align: center; }
+.message-guide strong { color: var(--cherry-dark); }
+
+/* En computadora con teclado los botones táctiles sobran. */
+@media (hover: hover) and (pointer: fine) and (min-width: 721px) { .message-controls { display: none; } }
+@media (max-width: 720px) {
+  .message-part { padding: 24px 0 22px; }
+  .message-intro h2 { font-size: clamp(2.1rem, 9vw, 2.8rem); }
+  .message-session { padding: 8px; border-radius: 15px; }
+  .message-slot { min-height: 34px; padding: 4px 8px; font-size: 1rem; }
+  .message-slot:not(.is-filled)::before { margin-top: 15px; }
+  .message-panel { padding: 18px 16px 20px; }
+  .message-panel h3 { font-size: 1.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .message-part *, .message-part *::before, .message-part *::after { animation: none !important; transition: none !important; }
+}
+
+/* Premio de "Arma el mensaje": canción dedicada. */
+.song-part { padding: 35px 0 30px; }
+.song-card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 30px; width: min(100%, 680px); margin: 8px auto 0; padding: 28px; border: 1px solid #d9b3c0; border-radius: 19px; background: #fffaf5; box-shadow: 0 6px 0 #e9d8d4, 0 18px 45px #6b314210; }
+.song-celebration { bottom: auto; top: 30%; height: 70px; }
+.song-player { display: grid; justify-items: center; gap: 14px; }
+.song-disc { position: relative; display: grid; place-items: center; width: 190px; height: 190px; border-radius: 50%; background: repeating-radial-gradient(circle, #40252d 0 2px, #4d2d37 2px 4px); box-shadow: 0 10px 24px #40252d40, inset 0 0 0 6px #2f1a20; animation: song-spin 5s linear infinite; }
+.song-disc::after { content: ""; position: absolute; inset: 14px; border-radius: 50%; background: linear-gradient(135deg, #ffffff18, transparent 45%, #ffffff10 70%, transparent); }
+.song-disc-label { display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; background: radial-gradient(circle, #f6dde4 0 40%, #b62d51 41%); color: var(--cherry); border: 3px solid #f3c9d5; }
+.song-disc-label svg { width: 20px; height: 20px; }
+.song-bars { display: flex; align-items: flex-end; gap: 4px; height: 22px; }
+.song-bars span { width: 5px; height: 100%; border-radius: 3px; background: var(--cherry); transform-origin: bottom; animation: song-bar 900ms ease-in-out infinite alternate; }
+.song-bars span:nth-child(2) { animation-delay: -300ms; background: #d88b9f; }
+.song-bars span:nth-child(3) { animation-delay: -600ms; }
+.song-bars span:nth-child(4) { animation-delay: -150ms; background: #d88b9f; }
+.song-bars span:nth-child(5) { animation-delay: -450ms; }
+@keyframes song-spin { to { transform: rotate(360deg); } }
+@keyframes song-bar { from { transform: scaleY(.25); } to { transform: scaleY(1); } }
+.song-info { text-align: left; }
+.song-kicker { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 10px; color: #8d616c; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.song-kicker svg { width: 13px; height: 13px; color: var(--cherry); }
+.song-name { margin: 0; color: var(--cherry-dark); font: italic 400 clamp(1.8rem, 4vw, 2.4rem)/1.1 var(--serif); letter-spacing: -.035em; }
+.song-artist { margin: 6px 0 16px; color: var(--muted); font-size: .9375rem; font-weight: 600; }
+.song-for { margin: 0 0 6px; color: var(--cherry); font: italic 1.05rem/1.5 var(--serif); }
+.song-dedication { margin: 0; color: #5a3a44; font: 1rem/1.75 var(--serif); text-wrap: pretty; }
+.song-signature { margin: 10px 0 18px; color: var(--cherry-dark); font: italic 1rem/1.5 var(--serif); }
+.song-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.song-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; padding: 8px 14px; border: 1px solid #d6a3b3; border-radius: 999px; background: #fffdfb; color: var(--cherry-dark); font-size: .8125rem; font-weight: 600; text-decoration: none; }
+.song-link svg { width: 14px; height: 14px; }
+.song-link.song-spotify { flex-basis: 100%; min-height: 50px; border-color: var(--cherry-dark); background: var(--cherry); color: #fff9f4; font-size: .9375rem; box-shadow: 0 4px 0 #7d1f38; }
+@media (hover: hover) { .song-link:hover { background: #fbe8ee; } .song-link.song-spotify:hover { background: var(--cherry-dark); } }
+.song-link:focus-visible { outline: 3px solid var(--cherry); outline-offset: 3px; }
+.song-note { margin: 12px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.6; }
+.song-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 28px auto 0; }
+.song-next { width: min(100%, 330px); }
+@media (max-width: 720px) {
+  .song-part { padding: 24px 0 22px; }
+  .song-card { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 22px 18px; }
+  .song-disc { width: 150px; height: 150px; }
+  .song-disc-label { width: 56px; height: 56px; }
+  .song-info { text-align: center; }
+  .song-links { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .song-disc, .song-bars span { animation: none; } }
+
+/* Reproductor del clímax dentro de la tarjeta de la canción. */
+.song-video { grid-column: 1 / -1; text-align: center; }
+.song-video-frame:not(:empty) { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid #d9b3c0; border-radius: 12px; background: #40252d; }
+.song-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.song-video-frame.has-audio { aspect-ratio: auto; padding: 14px; background: #fbe8ee; }
+.song-video-frame audio { display: block; width: 100%; }
+.song-play { display: inline-flex; margin-top: 4px; }
+.song-youtube { display: block; margin-top: 10px; color: var(--muted); font-size: .75rem; }
+.song-youtube:hover { color: var(--cherry-dark); }
+.message-skip .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.message-skip .primary-button svg { width: 18px; height: 18px; }
+.message-skip .text-button { margin-top: 12px; }
