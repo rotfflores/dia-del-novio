@@ -242,7 +242,7 @@ window.COUPLE_CONFIG = {
     }
   },
   "song": {
-    "name": "Perfect Symphony · Live at Wembley Stadium",
+    "name": "Perfect Symphony",
     "artist": "Ed Sheeran feat. Andrea Bocelli",
     "title": "Nuestra canción",
     "introduction": "Una canción para celebrar nuestro primer año juntos.",
@@ -253,7 +253,7 @@ window.COUPLE_CONFIG = {
       "appleMusic": "",
       "youtubeMusic": ""
     },
-    "audioSrc": "./assets/perfect-symphony.mp3",
+    "audioSrc": "./assets/perfect-symphony.mp3?v=20261014-lg2",
     "youtubeId": "",
     "climaxStart": 0,
     "note": "Por todos los sueños, viajes, abrazos y aventuras que todavía nos esperan.",
