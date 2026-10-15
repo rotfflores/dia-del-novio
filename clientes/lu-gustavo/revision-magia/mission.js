@@ -8,7 +8,7 @@ const missionConfig = {
   eventDate: "Febrero de 2027",
   saveWrittenAnswer: false,
   answerWebhook: "",
-  // Vista temporal: no publica un número personal ni activa el envío del resumen.
+  // WhatsApp que recibe el resumen de la misión (con código de país, sin espacios).
   whatsappNumber: ""
 };
 
@@ -48,13 +48,17 @@ const missionConfig = {
   function attachEntry(parent, navigate, resume = false) {
     const card = document.createElement("aside");
     card.className = "mission-entry"; card.hidden = !progress.snapshot().unlocked;
-    const heading = document.createElement("h3"); heading.textContent = resume ? "Nuestra aventura continúa" : "Nueva misión desbloqueada";
-    const hint = document.createElement("p"); hint.textContent = "Un camino de luz, recuerdos y un secreto por descubrir.";
+    // Tarjeta de acceso con el castillo de fondo; solo aparece cuando la misión ya está desbloqueada.
+    const scene = document.createElement("div"); scene.className = "mission-entry-scene"; scene.setAttribute("aria-hidden", "true");
+    const badge = document.createElement("p"); badge.className = "mission-entry-badge"; badge.textContent = resume ? "Misión mágica" : "Nueva misión desbloqueada";
+    const heading = document.createElement("h3"); heading.textContent = resume ? "Nuestra aventura continúa" : "Un secreto entre las estrellas";
+    const hint = document.createElement("p"); hint.className = "mission-entry-hint"; hint.textContent = "Cuatro pruebas, un castillo bajo la luna y un secreto por descubrir.";
     const button = document.createElement("button"); button.type = "button"; button.className = "primary-button";
     button.textContent = resume ? "Continuar la misión mágica" : "Comenzar la nueva aventura";
+    button.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>');
     button.addEventListener("click", () => { enterFullscreen(); navigate(8); });
-    const emblem = document.createElement("div"); emblem.className = "mission-entry-emblem"; emblem.setAttribute("aria-hidden", "true"); emblem.innerHTML = art.ticket;
-    card.append(emblem, heading, hint, button); parent.append(card);
+    const sparkles = document.createElement("span"); sparkles.className = "mission-entry-sparkles"; sparkles.setAttribute("aria-hidden", "true");
+    card.append(scene, sparkles, badge, heading, hint, button); parent.append(card);
     return card;
   }
   function refreshEntries() { document.querySelectorAll(".mission-entry").forEach((card) => { card.hidden = !progress.snapshot().unlocked; }); }
@@ -202,7 +206,7 @@ const missionConfig = {
     function welcome(screen) {
       const copy = node("div", "", "mission-invitation");
       copy.append(node("p", "Un secreto entre las estrellas", "mission-eyebrow")); title(copy, "Una nueva misión");
-      copy.append(node("p", "La primera aventura ha terminado, pero la magia de nuestra historia apenas comienza. Hay un secreto escondido entre los recuerdos de Hogwarts… y solo tú puedes descubrirlo."), node("p", "¿Juras solemnemente que tus intenciones no son buenas?", "mission-question"));
+      copy.append(node("p", "La primera aventura ha terminado, pero la magia de nuestra historia apenas comienza.."), node("p", "¿Juras solemnemente que tus intenciones no son buenas?", "mission-question"));
       copy.append(button("Juro que mis intenciones no son buenas", () => { enterFullscreen(); progress.enter(); render(true); }));
       screen.append(copy);
     }
