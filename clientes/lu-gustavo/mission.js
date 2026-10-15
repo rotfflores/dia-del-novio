@@ -1,8 +1,9 @@
-/* Edita aquí el regalo. La respuesta SIEMPRE se guarda localmente; los dos últimos
+/* El cierre es la nota de Lu. Campos del regalo vacíos para conservar la sorpresa.
+   La respuesta SIEMPRE se guarda localmente; los dos últimos
    campos quedan reservados para una futura integración autorizada, sin envío actual. */
 const missionConfig = {
-  giftTitle: "REGALO SORPRESA",
-  giftDescription: "DESCRIPCIÓN DEL REGALO",
+  giftTitle: "",
+  giftDescription: "",
   giftImage: "",
   eventDate: "Febrero de 2027",
   saveWrittenAnswer: false,
@@ -190,14 +191,17 @@ const missionConfig = {
     }
     function finale(screen, state) {
       title(screen, "¡Misión cumplida, mago! ⚡");
-      const gift = node("article", "", "mission-gift");
-      const imageSrc = String(missionConfig.giftImage || "");
-      if (/^(https:\/\/|\.\/)/.test(imageSrc)) {
-        const image = node("img"); image.alt = missionConfig.giftTitle; image.src = imageSrc;
-        image.addEventListener("error", () => image.replaceWith(illustration("ticket")), { once: true }); gift.append(image);
-      } else gift.append(illustration("ticket"));
-      gift.append(node("p", missionConfig.eventDate, "mission-kicker"), node("h3", missionConfig.giftTitle), node("p", missionConfig.giftDescription));
-      screen.append(gift);
+      // Sin datos explícitos no hay tarjeta adicional: el regalo es esta nota.
+      if ([missionConfig.giftTitle, missionConfig.giftDescription, missionConfig.giftImage].some((value) => String(value || "").trim())) {
+        const gift = node("article", "", "mission-gift");
+        const imageSrc = String(missionConfig.giftImage || "");
+        if (/^(https:\/\/|\.\/)/.test(imageSrc)) {
+          const image = node("img"); image.alt = missionConfig.giftTitle; image.src = imageSrc;
+          image.addEventListener("error", () => image.replaceWith(illustration("ticket")), { once: true }); gift.append(image);
+        } else gift.append(illustration("ticket"));
+        gift.append(node("p", missionConfig.eventDate, "mission-kicker"), node("h3", missionConfig.giftTitle), node("p", missionConfig.giftDescription));
+        screen.append(gift);
+      }
       const letter = node("div", "", "mission-final-letter");
       [
         "Has seguido las pistas, superado las pruebas y llegado al final de esta aventura.",

@@ -17,10 +17,10 @@ Acceso temporal para revisar sin jugar: añadir `?revision=mision` al enlace de 
 
 El último juego es infinito. Una ronda terminada, incluso con cero puntos, desbloquea la misión. Usar «Terminar la aventura» antes de jugar conserva la celebración original, pero no desbloquea la misión. Después del desbloqueo aparece también «Continuar la misión mágica» en la bienvenida para retomar tras una recarga.
 
-El regalo se edita al principio de `mission.js`, en `missionConfig`:
+El cierre comienza con «¡Misión cumplida, mago! ⚡» y continúa directamente con la nota de Lu y la respuesta escrita. No revela el regalo ni muestra tarjetas provisionales. Las opciones se editan al principio de `mission.js`, en `missionConfig`:
 
-- `giftTitle` y `giftDescription`: título y descripción. Actualmente contienen los marcadores solicitados, pendientes del regalo real.
-- `giftImage`: ruta `./assets/archivo.jpg` o URL HTTPS. Vacío muestra el sobre SVG original.
+- `giftTitle`, `giftDescription` y `giftImage`: vacíos para omitir la tarjeta y conservar la sorpresa. Solo si se completan se muestra una tarjeta adicional.
+- `giftImage`: si se activa la tarjeta, admite una ruta `./assets/archivo.jpg` o URL HTTPS. Vacío usa un sobre SVG original.
 - `eventDate`: fecha de la tarjeta y de la frase final. Predeterminado: «Febrero de 2027».
 - `saveWrittenAnswer` y `answerWebhook`: reservados para una futura integración. No activan ningún envío. La respuesta siempre se guarda solo en el navegador con el resto del progreso.
 
@@ -30,4 +30,4 @@ El regalo se edita al principio de `mission.js`, en `missionConfig`:
 
 Pruebas: instalar `jsdom` como herramienta de desarrollo (no es dependencia del sitio) y ejecutar `node --test tests/mission.test.cjs` desde esta carpeta. Incluyen navegación de los juegos anteriores, finalización real de una ronda, bloqueos, respuestas, persistencia, contenido configurable y ausencia de reproducción al cargar. La simulación DOM a 360 y 1280 píxeles no sustituye una revisión visual en dispositivos reales.
 
-Verificación en navegador realizada a 390, 360 y 1280 píxeles: recorrido de los juegos anteriores, bloqueo si no se juega la ronda final, desbloqueo al terminar una ronda, dos respuestas incorrectas y una correcta del hipogrifo, orden incorrecto y correcto del hechizo, respuesta obligatoria y persistencia tras recargar, notas secuenciales con toque y teclado, persistencia parcial de notas y revelación final. Sin errores de consola ni desbordamiento horizontal en los anchos revisados. El regalo real continúa pendiente de los datos de Lu.
+Verificación en navegador realizada a 390, 360 y 1280 píxeles: recorrido de los juegos anteriores, bloqueo si no se juega la ronda final, desbloqueo al terminar una ronda, dos respuestas incorrectas y una correcta del hipogrifo, orden incorrecto y correcto del hechizo, respuesta obligatoria y persistencia tras recargar, notas secuenciales con toque y teclado, persistencia parcial de notas y revelación final. Sin errores de consola ni desbordamiento horizontal en los anchos revisados.

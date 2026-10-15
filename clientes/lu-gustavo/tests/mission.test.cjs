@@ -94,6 +94,23 @@ test("acceso temporal directo sin desbloquear ni sobrescribir el progreso normal
     assert.deepEqual(h.errors, []);
   } finally { h.dom.window.close(); }
 });
+test("el cierre predeterminado es la nota de Lu, sin tarjeta ni textos provisionales", async () => {
+  const state = { unlocked: true, entered: true, completed: 4, stage: 4, notes: 5, revealed: true, answer: "Nuestro primer viaje" };
+  const h = harness(390, state);
+  try {
+    assert(await h.w.Aventura.goToPart(8));
+    const screen = h.w.document.querySelector(".mission-screen");
+    assert.equal(screen.querySelector("h2").textContent, "¡Misión cumplida, mago! ⚡");
+    assert.equal(screen.querySelector(".mission-gift"), null);
+    assert.equal(screen.querySelector("h2").nextElementSibling.className, "mission-final-letter");
+    assert(!screen.textContent.includes("REGALO SORPRESA"));
+    assert(!screen.textContent.includes("DESCRIPCIÓN DEL REGALO"));
+    assert(screen.textContent.includes("Febrero de 2027 tenemos una cita mágica. 🪄"));
+    assert(screen.textContent.includes("Tu compañera de aventuras, Lu."));
+    assert.equal(screen.querySelector(".mission-written-memory blockquote").textContent, state.answer);
+    assert.deepEqual(h.errors, []);
+  } finally { h.dom.window.close(); }
+});
 async function reachLastGame(h) {
   const { w } = h;
   assert(await w.Aventura.goToPart2());
