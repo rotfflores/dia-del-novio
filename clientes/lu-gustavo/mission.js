@@ -7,7 +7,9 @@ const missionConfig = {
   giftImage: "",
   eventDate: "Febrero de 2027",
   saveWrittenAnswer: false,
-  answerWebhook: ""
+  answerWebhook: "",
+  // Vacío permite elegir el contacto al compartir, sin publicar un número personal.
+  whatsappNumber: ""
 };
 
 (() => {
@@ -46,16 +48,110 @@ const missionConfig = {
   function attachEntry(parent, navigate, resume = false) {
     const card = document.createElement("aside");
     card.className = "mission-entry"; card.hidden = !progress.snapshot().unlocked;
-    const heading = document.createElement("h3"); heading.textContent = resume ? "Nuestra aventura continúa" : "Nueva misión desbloqueada";
-    const hint = document.createElement("p"); hint.textContent = "Un camino de luz, recuerdos y un secreto por descubrir.";
+    // Tarjeta de acceso con el castillo de fondo; solo aparece cuando la misión ya está desbloqueada.
+    const scene = document.createElement("div"); scene.className = "mission-entry-scene"; scene.setAttribute("aria-hidden", "true");
+    const badge = document.createElement("p"); badge.className = "mission-entry-badge"; badge.textContent = resume ? "Misión mágica" : "Nueva misión desbloqueada";
+    const heading = document.createElement("h3"); heading.textContent = resume ? "Nuestra aventura continúa" : "Un secreto entre las estrellas";
+    const hint = document.createElement("p"); hint.className = "mission-entry-hint"; hint.textContent = "Cuatro pruebas, un castillo bajo la luna y un secreto por descubrir.";
     const button = document.createElement("button"); button.type = "button"; button.className = "primary-button";
     button.textContent = resume ? "Continuar la misión mágica" : "Comenzar la nueva aventura";
-    button.addEventListener("click", () => navigate(8));
-    const emblem = document.createElement("div"); emblem.className = "mission-entry-emblem"; emblem.setAttribute("aria-hidden", "true"); emblem.innerHTML = art.ticket;
-    card.append(emblem, heading, hint, button); parent.append(card);
+    button.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>');
+    button.addEventListener("click", () => { enterFullscreen(); navigate(8); });
+    const sparkles = document.createElement("span"); sparkles.className = "mission-entry-sparkles"; sparkles.setAttribute("aria-hidden", "true");
+    card.append(scene, sparkles, badge, heading, hint, button); parent.append(card);
     return card;
   }
   function refreshEntries() { document.querySelectorAll(".mission-entry").forEach((card) => { card.hidden = !progress.snapshot().unlocked; }); }
+  // Pantalla completa opcional: solo donde el navegador lo permite (no en iPhone).
+  const canFullscreen = () => Boolean(document.fullscreenEnabled && document.documentElement.requestFullscreen);
+  function enterFullscreen() {
+    if (!canFullscreen() || document.fullscreenElement) return;
+    try { Promise.resolve(document.documentElement.requestFullscreen({ navigationUI: "hide" })).catch(() => {}); } catch { /* Se queda en la ventana normal. */ }
+  }
+  function exitFullscreen() {
+    if (!document.fullscreenElement || !document.exitFullscreen) return;
+    try { Promise.resolve(document.exitFullscreen()).catch(() => {}); } catch { /* Sin cambios. */ }
+  }
+  // Modo noche: la misión ocupa toda la pantalla y el resto del sitio conserva su diseño.
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const paperColor = themeColor?.content || "#faf7f2";
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+  let backdrop = null;
+  // Fondo animado: video del castillo en bucle, sombra para leer y destellos dorados.
+  // Se crea solo al llegar a la misión para no descargar el video antes.
+  function ensureBackdrop() {
+    if (backdrop) return backdrop;
+    backdrop = document.createElement("div");
+    backdrop.className = "mission-backdrop"; backdrop.setAttribute("aria-hidden", "true");
+    const still = reducedMotion?.matches;
+    const media = (className) => {
+      if (still) {
+        const poster = document.createElement("img"); poster.className = className; poster.alt = ""; poster.src = "./assets/mission-hogwarts.jpg";
+        return poster;
+      }
+      const video = document.createElement("video");
+      video.className = className;
+      video.muted = true; video.defaultMuted = true; video.loop = true; video.playsInline = true; video.autoplay = true;
+      ["muted", "loop", "playsinline", "autoplay"].forEach((name) => video.setAttribute(name, ""));
+      video.preload = "auto"; video.poster = "./assets/mission-hogwarts.jpg"; video.disablePictureInPicture = true;
+      video.src = "./assets/mission-hogwarts.mp4?v=20261015-m7";
+      return video;
+    };
+    // En pantallas horizontales el video vertical se ve nítido al centro sobre una copia difuminada.
+    if (window.matchMedia?.("(min-aspect-ratio: 4/5)").matches) backdrop.append(media("mission-backdrop-fill"));
+    backdrop.append(media("mission-backdrop-media"));
+    const shade = document.createElement("div"); shade.className = "mission-backdrop-shade";
+    const embers = document.createElement("div"); embers.className = "mission-embers";
+    if (!still) {
+      for (let i = 0; i < 18; i += 1) {
+        const ember = document.createElement("i");
+        ember.style.setProperty("--x", `${(i * 37 + 11) % 100}%`);
+        ember.style.setProperty("--d", `${9 + (i * 7) % 9}s`);
+        ember.style.setProperty("--delay", `${-((i * 1.7) % 12)}s`);
+        ember.style.setProperty("--s", `${2 + (i % 3)}px`);
+        ember.style.setProperty("--drift", `${(i % 2 ? 1 : -1) * (12 + (i * 5) % 26)}px`);
+        embers.append(ember);
+      }
+    }
+    backdrop.append(shade, embers);
+    document.body.prepend(backdrop);
+    return backdrop;
+  }
+  function setMissionMode(on) {
+    document.documentElement.classList.toggle("is-mission-mode", on);
+    if (themeColor) themeColor.content = on ? "#08121c" : paperColor;
+    if (on) {
+      const created = !backdrop;
+      const videos = ensureBackdrop().querySelectorAll("video");
+      // El video nuevo arranca solo (autoplay silencioso); al volver se reanuda.
+      if (!created) videos.forEach((video) => { if (video.paused) { try { Promise.resolve(video.play()).catch(() => {}); } catch { /* Queda el póster. */ } } });
+    } else {
+      backdrop?.querySelectorAll("video").forEach((video) => video.pause());
+      exitFullscreen();
+    }
+  }
+  // Destellos al tocar dentro de la misión, como chispas de varita.
+  document.addEventListener("pointerdown", (event) => {
+    if (reducedMotion?.matches || !document.documentElement.classList.contains("is-mission-mode") || !event.target.closest?.(".magic-mission")) return;
+    for (let i = 0; i < 7; i += 1) {
+      const spark = document.createElement("span");
+      spark.className = "mission-spark"; spark.setAttribute("aria-hidden", "true");
+      const angle = (Math.PI * 2 * i) / 7 + Math.random() * .6, distance = 18 + Math.random() * 26;
+      spark.style.left = `${event.clientX}px`; spark.style.top = `${event.clientY}px`;
+      spark.style.setProperty("--tx", `${Math.cos(angle) * distance}px`); spark.style.setProperty("--ty", `${Math.sin(angle) * distance}px`);
+      document.body.append(spark);
+      spark.addEventListener("animationend", () => spark.remove(), { once: true });
+      setTimeout(() => spark.remove(), 1200);
+    }
+  }, { passive: true });
+  document.addEventListener("adventure:partchange", (event) => setMissionMode(event.detail.currentPart === 8));
+  function paintFullscreen(control) {
+    const on = Boolean(document.fullscreenElement);
+    control.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${on ? "M9 4v5H4m11-5v5h5M9 20v-5H4m11 5v-5h5" : "M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5"}"/></svg>`;
+    control.setAttribute("aria-label", on ? "Salir de pantalla completa" : "Ver en pantalla completa");
+    control.title = control.getAttribute("aria-label");
+  }
+  document.addEventListener("fullscreenchange", () => document.querySelectorAll(".mission-fullscreen").forEach(paintFullscreen));
   window.MagicMission = Object.freeze({ progress, unlock, attachEntry, config: missionConfig });
 
   window.Aventura.registerPart8((container, context) => {
@@ -79,9 +175,16 @@ const missionConfig = {
       if (!state.unlocked) return;
       container.replaceChildren();
       const scene = !state.entered ? "welcome" : state.revealed ? "finale" : "journey";
-      const shell = node("div", "", `mission-shell mission-scene-${scene}`);
+      const shell = node("div", "", `mission-shell mission-scene-${scene}${focus ? " is-entering" : ""}`);
+      document.documentElement.dataset.missionScene = scene;
       if (reviewMode) container.append(node("p", "Modo de revisión temporal · Progreso de prueba independiente", "mission-review-note"));
-      shell.append(node("p", "Gus + Lu · La aventura continúa", "mission-kicker"));
+      const topbar = node("div", "", "mission-topbar");
+      topbar.append(node("p", "Gus + Lu · La aventura continúa", "mission-kicker"));
+      if (canFullscreen()) {
+        const expand = button("", () => { if (document.fullscreenElement) exitFullscreen(); else enterFullscreen(); }, "mission-fullscreen");
+        paintFullscreen(expand); topbar.append(expand);
+      }
+      shell.append(topbar);
       const screen = node("div", "", `mission-screen mission-${scene}`);
       shell.append(screen);
       const warning = node("p", "Este navegador no permite guardar el progreso. Mantén esta pestaña abierta para continuar.", "mission-storage-notice");
@@ -96,18 +199,16 @@ const missionConfig = {
       }
       if (focus) {
         const target = screen.querySelector("h2"); target?.focus({ preventScroll: true });
-        container.scrollIntoView({ behavior: "instant", block: "start" });
+        window.scrollTo({ top: 0, behavior: "instant" });
       }
     }
     function title(parent, text) { const heading = node("h2", text); heading.tabIndex = -1; heading.id = "magic-mission-title"; parent.append(heading); }
     function welcome(screen) {
-      const scene = node("div", "", "mission-portal");
-      const image = node("img"); image.src = "./assets/mission-observatory.svg"; image.alt = ""; image.width = 520; image.height = 600; scene.setAttribute("aria-hidden", "true"); scene.append(image);
       const copy = node("div", "", "mission-invitation");
       copy.append(node("p", "Un secreto entre las estrellas", "mission-eyebrow")); title(copy, "Una nueva misión");
-      copy.append(node("p", "La primera aventura ha terminado, pero la magia de nuestra historia apenas comienza. Hay un secreto escondido entre los recuerdos de Hogwarts… y solo tú puedes descubrirlo."), node("p", "¿Juras solemnemente que tus intenciones no son buenas?", "mission-question"));
-      copy.append(button("Juro que mis intenciones no son buenas", () => { progress.enter(); render(true); }));
-      screen.append(scene, copy);
+      copy.append(node("p", "La primera aventura ha terminado, pero la magia de nuestra historia apenas comienza.."), node("p", "¿Juras solemnemente que tus intenciones no son buenas?", "mission-question"));
+      copy.append(button("Juro que mis intenciones no son buenas", () => { enterFullscreen(); progress.enter(); render(true); }));
+      screen.append(copy);
     }
     function map(screen, state) {
       const nav = node("nav", "", "mission-map"); nav.setAttribute("aria-label", "Recorrido de las cuatro pruebas");
@@ -132,30 +233,38 @@ const missionConfig = {
         list.append(item);
       });
       route.append(list); nav.append(route); screen.append(nav);
-      const count = node("p", `Prueba ${state.stage} de 4`, "mission-counter"); count.setAttribute("role", "status"); screen.append(count);
-      const meter = node("progress"); meter.max = 4; meter.value = state.completed; meter.setAttribute("aria-label", `${state.completed} de 4 pruebas completadas`); screen.append(meter);
+      const meter = node("progress"); meter.max = 4; meter.value = state.completed; meter.setAttribute("aria-label", `${state.completed} de 4 pruebas completadas`); nav.append(meter);
     }
     function station(screen, state) {
       const card = node("article", "", `mission-parchment mission-trial-${state.stage}`); screen.append(card);
-      title(card, titles[state.stage - 1]);
+      const media = node("div", "", "mission-trial-media"), body = node("div", "", "mission-trial-body");
+      media.setAttribute("aria-hidden", "true");
+      media.append(node("span", ["I", "II", "III", "IV"][state.stage - 1], "mission-trial-number"));
+      card.append(media, body);
+      const count = node("p", `Prueba ${state.stage} de 4 · ${["Respeto", "Tiempo", "Luz", "Secreto"][state.stage - 1]}`, "mission-counter"); count.setAttribute("role", "status");
+      body.append(count);
+      title(body, titles[state.stage - 1]);
       const output = node("p", "", "mission-feedback"); output.setAttribute("role", "status"); output.setAttribute("aria-live", "polite");
       if (state.completed >= state.stage && state.stage < 4) {
-        card.append(illustration(["feather", "time", "guardian"][state.stage - 1]));
-        if (state.stage === 2) card.append(node("blockquote", state.answer));
-        card.append(node("p", success[state.stage - 1], "mission-success"));
-        card.append(button("Continuar el camino →", () => { if (progress.visit(state.stage + 1)) { words = []; render(true); } }));
+        card.classList.add("is-complete");
+        media.append(illustration(["feather", "time", "guardian"][state.stage - 1]));
+        if (state.stage === 2) body.append(node("blockquote", state.answer));
+        body.append(node("p", success[state.stage - 1], "mission-success"));
+        body.append(button("Continuar el camino →", () => { if (progress.visit(state.stage + 1)) { words = []; render(true); } }));
         return;
       }
       if (state.stage === 1) {
-        card.append(illustration("feather"), node("p", "Tengo alas, garras y mucho orgullo. Antes de acercarte, tendrás que demostrar que mereces mi respeto. ¿Qué debes hacer?"));
+        media.append(illustration("feather"));
+        body.append(node("p", "Tengo alas, garras y mucho orgullo. Antes de acercarte, tendrás que demostrar que mereces mi respeto. ¿Qué debes hacer?", "mission-riddle"));
         const answers = node("div", "", "mission-answers");
         ["Acercarme rápidamente.", "Hacer una reverencia.", "Pronunciar un hechizo."].forEach((answer) => {
           answers.append(button(answer, () => { if (progress.bow(answer.slice(0, -1))) render(true); else feedback("Con calma: el respeto abre más caminos que la prisa. Puedes intentarlo otra vez."); }, "secondary-button"));
-        }); card.append(answers);
+        }); body.append(answers);
       } else if (state.stage === 2) {
-        card.append(illustration("time"), node("p", "Giro sobre mi cuello y las horas puedo cambiar. Si pudieras volver a un instante de nuestra historia, ¿cuál te gustaría revivir?"));
+        media.append(illustration("time"));
+        body.append(node("p", "Giro sobre mi cuello y las horas puedo cambiar. Si pudieras volver a un instante de nuestra historia, ¿cuál te gustaría revivir?", "mission-riddle"));
         const form = node("form"), label = node("label", "El recuerdo que volverías a vivir…"); label.htmlFor = "mission-answer";
-        const input = node("textarea"); input.id = "mission-answer"; input.name = "writtenAnswer"; input.required = true; input.maxLength = 4000; input.rows = 5; input.value = state.answer;
+        const input = node("textarea"); input.id = "mission-answer"; input.name = "writtenAnswer"; input.required = true; input.maxLength = 4000; input.rows = 4; input.value = state.answer;
         const submit = node("button", "Guardar este recuerdo", "primary-button"); submit.type = "submit"; submit.disabled = !input.value.trim();
         input.addEventListener("input", () => { submit.disabled = !input.value.trim(); });
         form.addEventListener("submit", (event) => {
@@ -167,22 +276,26 @@ const missionConfig = {
           } else feedback("Escribe un recuerdo antes de continuar.");
         });
         const privacy = node("p", "Tu respuesta se guarda solo en este navegador.", "mission-local-note");
-        form.append(label, input, privacy, submit); card.append(form);
+        form.append(label, input, privacy, submit); body.append(form);
       } else if (state.stage === 3) {
-        card.append(illustration("light"), node("p", "Cuando la oscuridad se acerca, un recuerdo feliz puede iluminarlo todo. ¿Qué hechizo invoca un guardián de luz?"));
+        media.append(illustration("light"));
+        body.append(node("p", "Cuando la oscuridad se acerca, un recuerdo feliz puede iluminarlo todo. ¿Qué hechizo invoca un guardián de luz?", "mission-riddle"));
         const selection = node("p", "Elige las palabras en el orden correcto", "mission-spell"); selection.setAttribute("aria-live", "polite");
         const choices = node("div", "", "mission-word-choices");
         ["Lumos", "Patronum", "Accio", "Expecto"].forEach((word) => choices.append(button(word, () => {
           if (words.length >= 2) { feedback("Borra las palabras para probar otra combinación."); return; }
-          words.push(word); selection.textContent = words.join(" ");
+          words.push(word); selection.textContent = words.join(" "); selection.classList.add("is-filled");
         }, "secondary-button")));
-        card.append(selection, choices, button("Borrar palabras", () => { words = []; selection.textContent = "Elige las palabras en el orden correcto"; feedback(""); }, "text-button"), button("Invocar al guardián", () => {
+        const actions = node("div", "", "mission-spell-actions");
+        actions.append(button("Borrar palabras", () => { words = []; selection.textContent = "Elige las palabras en el orden correcto"; selection.classList.remove("is-filled"); feedback(""); }, "text-button"), button("Invocar al guardián", () => {
           if (progress.spell(words.join(" "))) { words = []; render(true); }
           else feedback("Todavía no brilla. Prueba otra combinación; tu recuerdo feliz te acompaña.");
         }));
+        body.append(selection, choices, actions);
       } else {
-        card.append(node("p", "Una historia que conoces de memoria volverá a cobrar vida. Esta vez, la magia no solo se verá: también se escuchará. Cientos de notas acompañarán cada aventura… ¿qué sorpresa te espera?"));
-        card.append(node("p", "Toca las notas iluminadas para llegar al sobre.", "mission-local-note"));
+        media.append(illustration("ticket"));
+        body.append(node("p", "Una historia que conoces de memoria volverá a cobrar vida. Esta vez, la magia no solo se verá: también se escuchará. Cientos de notas acompañarán cada aventura… ¿qué sorpresa te espera?", "mission-riddle"));
+        body.append(node("p", "Toca las notas iluminadas para llegar al sobre.", "mission-local-note"));
         const notes = node("div", "", "mission-notes"); notes.setAttribute("role", "group"); notes.setAttribute("aria-label", "Camino de cinco notas musicales");
         for (let i = 0; i < 5; i += 1) {
           const note = button(["♪", "♫", "♩", "♬", "♪"][i], () => {
@@ -196,15 +309,15 @@ const missionConfig = {
           note.setAttribute("aria-label", `Nota ${i + 1}${i < state.notes ? ", iluminada" : ""}`);
           notes.append(note);
         }
-        card.append(notes, illustration("ticket"));
-        if (state.notes === 5) card.append(button("Descubrir la sorpresa", () => { if (progress.reveal()) render(true); }));
+        body.append(notes);
+        if (state.notes === 5) body.append(button("Descubrir la sorpresa", () => { if (progress.reveal()) render(true); }));
         else {
           const active = notes.querySelector("button:not(:disabled)");
           // Mantener el foco en el siguiente paso después de cada toque o tecla.
           queueMicrotask(() => { if (state.notes > 0 && container.isConnected) active?.focus({ preventScroll: true }); });
         }
       }
-      card.append(output);
+      body.append(output);
     }
     function finale(screen, state) {
       screen.append(illustration("seal"));
@@ -223,7 +336,6 @@ const missionConfig = {
       const letter = node("div", "", "mission-final-letter");
       [
         "Has seguido las pistas, superado las pruebas y llegado al final de esta aventura.",
-        "Pero la última magia no está en Hogwarts… está en todo lo que todavía nos queda por vivir juntos.",
         `${missionConfig.eventDate} tenemos una cita mágica. 🪄`,
         "Y hay algo que quiero que nunca olvides:",
         "No importa en qué mundo nos encontremos, mi aventura favorita siempre será la que vivo contigo.",
@@ -231,11 +343,37 @@ const missionConfig = {
         "Con amor,",
         "Tu compañera de aventuras, Lu.",
       ].forEach((text, index) => {
-        const paragraph = node("p", "", ["", "", "mission-letter-date", "", "mission-letter-promise", "", "mission-letter-signoff", "mission-letter-signature"][index]); paragraph.append(node([2, 4, 5, 7].includes(index) ? "strong" : "span", text)); letter.append(paragraph);
+        const paragraph = node("p", "", ["", "mission-letter-date", "", "mission-letter-promise", "", "mission-letter-signoff", "mission-letter-signature"][index]); paragraph.append(node([1, 3, 4, 6].includes(index) ? "strong" : "span", text)); letter.append(paragraph);
       });
       screen.append(letter);
       const memory = node("aside", "", "mission-written-memory");
       memory.append(node("h3", "El momento que volverías a vivir…"), node("blockquote", state.answer)); screen.append(memory);
+      const actions = node("div", "", "mission-final-actions");
+      const number = String(missionConfig.whatsappNumber || "").replace(/\D/g, "");
+      // WhatsApp mostrará el selector de contactos si no se configuró un número.
+      {
+        const summary = [
+          "⚡ ¡Misión mágica cumplida! ⚡",
+          "",
+          "Así superé las cuatro pruebas de nuestra aventura de Harry Potter:",
+          "🪶 1. El hipogrifo: hice una reverencia y me gané su respeto.",
+          `⏳ 2. El giratiempo: el momento que volvería a vivir contigo es… «${state.answer}»`,
+          "✨ 3. El encantamiento: invoqué ¡Expecto Patronum!",
+          "🎵 4. El secreto: toqué las cinco notas y abrí el sobre.",
+          "",
+          `${missionConfig.eventDate} tenemos una cita mágica 🪄`,
+          "Feliz primer aniversario ❤️",
+        ].join("\n");
+        const share = node("a", "", "primary-button mission-whatsapp");
+        share.href = `https://wa.me/${number}?text=${encodeURIComponent(summary)}`;
+        share.target = "_blank"; share.rel = "noopener noreferrer";
+        share.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.7 8.2c.2-.4.5-.4.8-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.1-.1.3 0 .5a6 6 0 0 0 2.7 2.4c.2.1.4 0 .5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.7c.2.1.4.3.3.5 0 .6-.3 1.4-1 1.7-.6.3-1.6.4-3.4-.4a9 9 0 0 1-3.8-3.6c-.6-1-.8-2-.3-3.7Z" fill="currentColor"/></svg>';
+        share.append(document.createTextNode("Compartir mi misión por WhatsApp"));
+        share.addEventListener("click", () => window.Sonidos?.play?.("primary"));
+        actions.append(share);
+      }
+      actions.append(button("Repetir la misión mágica", () => { if (progress.restart()) { words = []; render(true); } }, "secondary-button mission-replay"));
+      screen.append(actions);
     }
     render();
     const update = (event) => { if (event.detail.currentPart === 8) render(true); };

@@ -50,6 +50,11 @@
         if (state.notes === 5) complete(4); else save();
         return true;
       },
+      // Repetir la misión: conserva el desbloqueo y vuelve a la bienvenida con todo en blanco.
+      restart() {
+        if (!state.unlocked) return false;
+        state = restore({ unlocked: true }); save(); return true;
+      },
       reveal() { if (!state.unlocked || state.completed !== 4 || state.notes !== 5) return false; state.revealed = true; save(); return true; },
     });
   }

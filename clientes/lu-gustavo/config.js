@@ -259,6 +259,11 @@ window.COUPLE_CONFIG = {
     "note": "Por todos los sueños, viajes, abrazos y aventuras que todavía nos esperan.",
     "pending": false
   },
+  "missionSong": {
+    "name": "A Window to the Past",
+    "artist": "John Williams",
+    "audioSrc": "./assets/a-window-to-the-past.mp3?v=20261015-m7"
+  },
   "flappy": {
     "title": "Vuela, corazón",
     "introduction": "Toca para aletear y cruza entre las columnas. Es infinito: ¿hasta dónde llegas?",

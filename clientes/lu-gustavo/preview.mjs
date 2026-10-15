@@ -12,6 +12,8 @@ const types = {
   ".jpeg": "image/jpeg",
   ".jpg": "image/jpeg",
   ".mp3": "audio/mpeg",
+  ".svg": "image/svg+xml",
+  ".mp4": "video/mp4",
 };
 
 http.createServer(async (request, response) => {

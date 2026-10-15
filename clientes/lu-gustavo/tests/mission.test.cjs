@@ -108,6 +108,10 @@ test("el cierre predeterminado es la nota de Lu, sin tarjeta ni textos provision
     assert(screen.textContent.includes("Febrero de 2027 tenemos una cita mágica. 🪄"));
     assert(screen.textContent.includes("Tu compañera de aventuras, Lu."));
     assert.equal(screen.querySelector(".mission-written-memory blockquote").textContent, state.answer);
+    const share = new URL(screen.querySelector(".mission-whatsapp").href);
+    assert.equal(share.hostname, "wa.me");
+    assert.equal(share.pathname, "/", "el número personal no está publicado en el enlace");
+    assert(share.searchParams.get("text").includes(state.answer));
     assert.deepEqual(h.errors, []);
   } finally { h.dom.window.close(); }
 });

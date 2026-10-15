@@ -63,5 +63,42 @@
   });
   // El audio comienza exclusivamente después de una interacción de la persona.
 
-  window.AventuraSoundtrack = Object.freeze({ audio, begin, restart, showIn, park, setEnabled });
+  // La misión mágica (parte 8) tiene su propia canción. Cada pista conserva su posición.
+  const missionSrc = window.COUPLE_CONFIG?.missionSong?.audioSrc;
+  const tracks = { main: src, mission: typeof missionSrc === "string" && missionSrc.startsWith("./") ? missionSrc : "" };
+  const positions = new Map();
+  let fadeTimer = 0;
+  function fade(from, to, done) {
+    clearInterval(fadeTimer);
+    const steps = 12;
+    let step = 0;
+    fadeTimer = setInterval(() => {
+      step += 1;
+      try { audio.volume = Math.max(0, Math.min(1, from + (to - from) * (step / steps))); } catch { /* iOS fija el volumen. */ }
+      if (step >= steps) { clearInterval(fadeTimer); done?.(); }
+    }, 40);
+  }
+  function useTrack(next) {
+    const current = audio.getAttribute("src");
+    if (!next || current === next) return;
+    // Solo continúa sonando si ya sonaba; nunca inicia audio sin una interacción.
+    const resume = enabled && !waitingForGesture && !audio.paused;
+    try { positions.set(current, audio.currentTime || 0); } catch { /* Sin metadatos todavía. */ }
+    const swap = () => {
+      audio.src = next;
+      const song = next === tracks.mission ? window.COUPLE_CONFIG.missionSong : window.COUPLE_CONFIG.song;
+      audio.setAttribute("aria-label", [song?.name, song?.artist].filter(Boolean).join(", "));
+      const at = positions.get(next) || 0;
+      if (at) audio.addEventListener("loadedmetadata", () => { try { audio.currentTime = at; } catch { /* Empieza desde el inicio. */ } }, { once: true });
+      if (!resume) { try { audio.volume = 1; } catch { /* Sin cambios. */ } return; }
+      try { audio.volume = 0; } catch { /* Sin cambios. */ }
+      begin().then(() => fade(0, 1));
+    };
+    if (resume) fade(audio.volume, 0, swap); else swap();
+  }
+  const trackFor = (part) => (part === 8 && tracks.mission ? tracks.mission : tracks.main);
+  document.addEventListener("adventure:partchange", (event) => useTrack(trackFor(event.detail.currentPart)));
+  if (window.Aventura?.currentPart === 8) useTrack(tracks.mission);
+
+  window.AventuraSoundtrack = Object.freeze({ audio, begin, restart, showIn, park, setEnabled, useTrack });
 })();
