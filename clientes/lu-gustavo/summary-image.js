@@ -87,7 +87,7 @@
     ctx.fillText(extras.subtitle || "Feliz primer aniversario", W / 2, 420, W - 140);
 
     // Nombres y fecha.
-    const names = `${config.names.her}  +  ${config.names.him}`;
+    const names = `${config.names.him}  +  ${config.names.her}`;
     ctx.font = `600 40px ${SANS}`;
     const nw = ctx.measureText(names).width + 80;
     ctx.fillStyle = "#fbe8ee"; roundRect(ctx, W / 2 - nw / 2, 466, nw, 76, 38); ctx.fill();

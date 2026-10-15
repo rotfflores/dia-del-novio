@@ -1,4 +1,4 @@
-# Lu + Gus
+# Gus + Lu
 
 Copia independiente para su primer aniversario. Inicio de la relación: 14 de octubre de 2025.
 

@@ -62,7 +62,7 @@
     find("h2").textContent = text.title;
     find(".gallery-introduction").textContent = gameText.introduction;
     find(".box-label > span").append(icon("heart-outline"), document.createTextNode(text.collectionLabel));
-    find(".box-couple").textContent = `${config.names.her} + ${config.names.him}`;
+    find(".box-couple").textContent = `${config.names.him} + ${config.names.her}`;
     find("#memorama-found-title").textContent = gameText.foundTitle;
     find(".collection-seal").append(icon("pixel-heart"));
     find(".gallery-complete h3").textContent = text.completedTitle;

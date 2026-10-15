@@ -11,7 +11,7 @@ window.COUPLE_CONFIG = {
     "position": "50% 50%"
   },
   "text": {
-    "pageTitle": "Lu + Gus · Nuestro primer aniversario",
+    "pageTitle": "Gus + Lu · Nuestro primer aniversario",
     "occasion": "Primer aniversario",
     "eyebrow": "Una historia, dos protagonistas",
     "title": "Nuestra aventura comienza aquí",

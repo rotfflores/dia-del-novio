@@ -90,7 +90,7 @@
     find(".calendar-year").textContent = String(date.year);
     find(".calendar-subtitle").textContent = text.calendarLabel;
     find("caption").textContent = `${date.monthName} de ${date.year}. Nuestra fecha: ${date.formatted}.`;
-    const names = `${config.names.her} + ${config.names.him}`;
+    const names = `${config.names.him} + ${config.names.her}`;
     find(".calendar-dedication").textContent = names;
     find(".scratch-cover-names").textContent = names;
     find(".scratch-emblem").append(icon("heart-outline"));

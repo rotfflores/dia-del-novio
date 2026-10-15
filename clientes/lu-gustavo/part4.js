@@ -97,7 +97,7 @@
     const board = find(".maze-board"), overlay = find(".maze-overlay"), announcer = find(".maze-announcer");
     find("#part-four-title").textContent = options.title;
     find(".maze-instruction").textContent = options.instruction;
-    find(".maze-dedication").textContent = `${config.names.her} + ${config.names.him} · El mejor equipo`;
+    find(".maze-dedication").textContent = `${config.names.him} + ${config.names.her} · El mejor equipo`;
     find(".maze-ready-details").textContent = `${duration} segundos para llenar de amor el camino. El premio te espera al terminar.`;
     find(".maze-reset").append(icon("replay"));
     find(".maze-sound").textContent = soundEnabled ? "Sonido: sí" : "Sonido: no";
