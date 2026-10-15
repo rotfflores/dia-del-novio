@@ -28,6 +28,8 @@ El cierre comienza con «¡Misión cumplida, mago! ⚡» y continúa directament
 
 `mission.css` contiene todos los estilos nuevos, limitados a la misión. No hay dependencias externas ni imágenes oficiales.
 
+El acabado visual usa el observatorio original de `assets/mission-observatory.svg`, símbolos SVG en `mission.js`, un mapa con camino iluminado y la nota final sobre pergamino. Conserva las tipografías de la página. Las animaciones son breves y se desactivan con `prefers-reduced-motion`. El resto del sitio conserva su diseño.
+
 Pruebas: instalar `jsdom` como herramienta de desarrollo (no es dependencia del sitio) y ejecutar `node --test tests/mission.test.cjs` desde esta carpeta. Incluyen navegación de los juegos anteriores, finalización real de una ronda, bloqueos, respuestas, persistencia, contenido configurable y ausencia de reproducción al cargar. La simulación DOM a 360 y 1280 píxeles no sustituye una revisión visual en dispositivos reales.
 
 Verificación en navegador realizada a 390, 360 y 1280 píxeles: recorrido de los juegos anteriores, bloqueo si no se juega la ronda final, desbloqueo al terminar una ronda, dos respuestas incorrectas y una correcta del hipogrifo, orden incorrecto y correcto del hechizo, respuesta obligatoria y persistencia tras recargar, notas secuenciales con toque y teclado, persistencia parcial de notas y revelación final. Sin errores de consola ni desbordamiento horizontal en los anchos revisados.

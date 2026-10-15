@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 600" fill="none">
+  <defs>
+    <linearGradient id="night" x1="260" y1="30" x2="260" y2="565" gradientUnits="userSpaceOnUse"><stop stop-color="#101b32"/><stop offset=".6" stop-color="#29334a"/><stop offset="1" stop-color="#453744"/></linearGradient>
+    <linearGradient id="gold" x1="80" y1="40" x2="440" y2="570" gradientUnits="userSpaceOnUse"><stop stop-color="#8d7351"/><stop offset=".45" stop-color="#f2d8a3"/><stop offset="1" stop-color="#897254"/></linearGradient>
+    <linearGradient id="mist" x1="260" y1="330" x2="260" y2="550" gradientUnits="userSpaceOnUse"><stop stop-color="#9f87ac" stop-opacity="0"/><stop offset="1" stop-color="#c2aac2" stop-opacity=".23"/></linearGradient>
+    <radialGradient id="moonlight"><stop stop-color="#fff1c9" stop-opacity=".2"/><stop offset="1" stop-color="#fff1c9" stop-opacity="0"/></radialGradient>
+    <linearGradient id="wax" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#a7957e"/><stop offset=".5" stop-color="#efe0bd"/><stop offset="1" stop-color="#c6ae84"/></linearGradient>
+    <clipPath id="arch"><path d="M72 532V236a188 188 0 0 1 376 0v296Z"/></clipPath>
+  </defs>
+  <path d="M54 550V236a206 206 0 0 1 412 0v314Z" stroke="url(#gold)" stroke-opacity=".45"/>
+  <path d="M64 542V236a196 196 0 0 1 392 0v306Z" stroke="url(#gold)"/>
+  <g clip-path="url(#arch)">
+    <path fill="url(#night)" d="M65 35h390v510H65z"/>
+    <circle cx="315" cy="163" r="108" fill="url(#moonlight)"/>
+    <path d="M334 113a42 42 0 1 0 18 71 39 39 0 0 1-18-71Z" fill="#f3deb0"/>
+    <g fill="#f2d8a3"><circle cx="170" cy="140" r="1.6"/><circle cx="214" cy="101" r="1"/><circle cx="126" cy="234" r="1"/><circle cx="219" cy="212" r="1.5"/><circle cx="369" cy="234" r="1.2"/><circle cx="399" cy="190" r="1"/><circle cx="147" cy="300" r="1.1"/><circle cx="293" cy="251" r="1.1"/><circle cx="392" cy="298" r="1.4"/><circle cx="185" cy="187" r="1"/></g>
+    <path d="m121 210 45-45 39 30 39-41" stroke="#d6c7a1" stroke-opacity=".25"/>
+    <g fill="#e5cea1"><circle cx="121" cy="210" r="2"/><circle cx="166" cy="165" r="2.5"/><circle cx="205" cy="195" r="2"/><circle cx="244" cy="154" r="2"/></g>
+    <path d="m388 139 2 7 7 2-7 2-2 7-2-7-7-2 7-2Zm-249 18 1.5 5 5 1.5-5 1.5-1.5 5-1.5-5-5-1.5 5-1.5Z" fill="#ecd3a0"/>
+    <path d="M60 379q63-65 112-13 66-55 128-16 79-63 164 19v180H60Z" fill="#17273a"/>
+    <path d="M60 431q79-71 139-14 60-59 117-13 91-34 147 14v131H60Z" fill="#111e2e"/>
+    <!-- Observatorio original: sin arquitectura, emblemas ni personajes oficiales. -->
+    <g stroke="#bba780" stroke-opacity=".5" stroke-width="1.2">
+      <path d="M184 414V311h37v-44h78v72h38v75Z" fill="#202c3d"/>
+      <path d="M215 267a45 45 0 0 1 90 0Zm45-65v-15m-7 8h14M174 311l28-31 28 31m62 28 26-31 29 31" fill="#30374a"/>
+      <path d="M235 267v-25m25 25v-44m25 44v-25M221 281h78M184 400h153M184 408h153"/>
+      <path d="M244 414v-30a16 16 0 0 1 32 0v30" fill="#e5bd7938"/>
+    </g>
+    <g fill="#e5c78d"><path d="M240 307v-10a5 5 0 0 1 10 0v10Zm30 0v-10a5 5 0 0 1 10 0v10ZM196 345v-9a4 4 0 0 1 8 0v9Zm115 24v-9a4 4 0 0 1 8 0v9Z"/><path opacity=".6" d="M240 341v-10a5 5 0 0 1 10 0v10Zm30 0v-10a5 5 0 0 1 10 0v10Z"/></g>
+    <path d="M244 414q-44 39-2 65 26 20-38 55h111q56-36-19-71-37-16-20-49Z" fill="#cfb588" fill-opacity=".17" stroke="#c5ab7d" stroke-opacity=".4"/>
+    <g stroke="#b6a080" stroke-opacity=".33"><path d="M234 429h42m-47 11h50m-48 12h55m-46 13h67m-47 15h70m-62 19h74m-104 21h97"/></g>
+    <path d="M65 320h390v230H65Z" fill="url(#mist)"/>
+    <path d="M64 473q118-22 187-7t206-16M64 496q123-19 204-5t189-15" stroke="#c1b3c6" stroke-opacity=".12" stroke-width="13"/>
+  </g>
+  <path d="M72 532V236a188 188 0 0 1 376 0v296Z" stroke="url(#gold)"/>
+  <g fill="#a48c64"><circle cx="54" cy="552" r="3"/><circle cx="466" cy="552" r="3"/><path d="m260 13 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"/></g>
+  <g class="candles">
+    <path d="M104 352h14v81h-14Zm298-22h13v58h-13Z" fill="url(#wax)"/>
+    <path d="M104 354q7 9 7 19t7 1v-20M402 332q7 12 7 23" stroke="#f4e1b8" stroke-width="2"/>
+    <path d="M111 349c-14-9-3-19 0-25 1 9 13 17 0 25Zm297-22c-12-8-2-18 0-23 2 8 12 16 0 23Z" fill="#f4d594"/>
+    <path d="M111 347q-5-6 0-13 5 8 0 13m297-23q-4-5 0-12 4 7 0 12" fill="#fff5d5"/>
+    <circle cx="111" cy="339" r="37" fill="url(#moonlight)"/><circle cx="408" cy="316" r="33" fill="url(#moonlight)"/>
+  </g>
+  <path d="M164 562h70m52 0h70m-96-9 9 9-9 9-9-9Z" stroke="url(#gold)"/>
+</svg>
