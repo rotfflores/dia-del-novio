@@ -99,6 +99,7 @@
     back.addEventListener("click", goToPart5);
     renderText(find(".flappy-final-button"), text.finishButton);
     find(".flappy-final-button").addEventListener("click", goToPart7);
+    window.MagicMission?.attachEntry(find(".flappy-finish"), context.goToPart);
     const canvas = find(".flappy-canvas"), ctx = canvas.getContext("2d");
     const announcer = find(".flappy-announcer"), overlay = find(".flappy-overlay");
     canvas.setAttribute("aria-label", "Juego infinito: el corazón vuela entre columnas. Toca o presiona espacio para aletear.");
@@ -131,6 +132,7 @@
 
     let overTimer = 0;
     function gameOver(score) {
+      window.MagicMission?.unlock();
       const isRecord = record.submit(score);
       sound(isRecord ? "win" : "miss");
       burst(BIRD_X, state.bird.y, ["#b62d51", "#d88b9f"], 8, 45);

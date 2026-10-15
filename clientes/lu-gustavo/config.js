@@ -18,7 +18,7 @@ window.COUPLE_CONFIG = {
     "titleAccent": "comienza aquí",
     "message": "Gus, hoy celebramos nuestro primer año juntos. Preparé esta aventura para recordar lo bonito que es compartir la vida contigo. ¿Estás listo?",
     "button": "Comenzar nuestra aventura ❤️",
-    "startNote": "Nuestra canción intentará sonar al abrir; si tu navegador lo impide, toca para escucharla",
+    "startNote": "Toca para comenzar nuestra aventura y escuchar nuestra canción",
     "photoCaption": "Mi lugar favorito en el mundo es donde estés tú.",
     "photoTag": "MI PERSONA FAVORITA",
     "placeholderTitle": "Nuestra foto favorita",
@@ -284,5 +284,5 @@ window.COUPLE_CONFIG = {
     "number": "",
     "buttonLabel": "Mandárselo a {nombre} por WhatsApp"
   },
-  "totalParts": 7
+  "totalParts": 8
 };

@@ -10,13 +10,14 @@
   const partFive = document.getElementById("part-five");
   const partSix = document.getElementById("part-six");
   const partSeven = document.getElementById("part-seven");
+  const partEight = document.getElementById("part-eight");
   const startButton = document.getElementById("start-button");
   const particles = document.getElementById("heart-particles");
   const status = document.getElementById("screen-reader-status");
   const activeAnimations = new Set();
   const prizeState = window.PrizeTools.createPrizeState();
   const state = { currentPart: 1, isTransitioning: false, part2Completed: false, part3Completed: false, highestUnlocked: 1, finished: false };
-  const sections = { 1: welcome, 2: nextPart, 3: partThree, 4: partFour, 5: partFive, 6: partSix, 7: partSeven };
+  const sections = { 1: welcome, 2: nextPart, 3: partThree, 4: partFour, 5: partFive, 6: partSix, 7: partSeven, 8: partEight };
   const mounted = new Set([1]);
   const cleanups = new Map();
   let part2Renderer = null; // part2.js registra el calendario antes de la interacción.
@@ -25,6 +26,7 @@
   let part5Renderer = null;
   let part6Renderer = renderPart6Placeholder;
   let part7Renderer = null; // part7-final.js registra la celebración final.
+  let part8Renderer = null;
 
   // Iconos vectoriales locales: no dependen de fuentes, emojis ni de Internet.
   function icon(name, className = "") {
@@ -95,12 +97,13 @@
       step.className = "progress-step";
       const label = document.createElement("span");
       label.className = "sr-only";
-      label.textContent = `Parte ${part}${part > state.highestUnlocked ? ": bloqueada" : ""}`;
+      const locked = part === 8 ? !window.MagicMission?.progress.snapshot().unlocked : part > state.highestUnlocked;
+      label.textContent = `Parte ${part}${locked ? ": bloqueada" : ""}`;
       step.append(label);
       if (part === state.currentPart) step.setAttribute("aria-current", "step");
       if (part < state.currentPart) step.classList.add("completed");
       // Terminada la aventura, cada punto del progreso lleva a su parte.
-      if (state.finished && part !== state.currentPart) {
+      if (state.finished && part !== state.currentPart && (part !== 8 || window.MagicMission?.progress.snapshot().unlocked)) {
         const jump = document.createElement("button");
         jump.type = "button";
         jump.className = "progress-jump";
@@ -216,6 +219,8 @@
 
   async function changePart(targetPart) {
     if (!sections[targetPart] || state.isTransitioning || state.currentPart === targetPart) return false;
+    // La misión exige una ronda terminada, incluso desde el menú de la celebración.
+    if (targetPart === 8 && !window.MagicMission?.progress.snapshot().unlocked) return false;
     // También bloquea intentos programáticos de saltarse la tarjeta.
     // Al terminar la aventura se puede saltar libremente a cualquier parte.
     if (!state.finished) {
@@ -224,7 +229,7 @@
       if (targetPart === 4 && state.currentPart === 5 && !getPrizeState().opened) return false;
       if (targetPart === 5 && (!getPrizeState().unlocked || ![4, 6].includes(state.currentPart))) return false;
       if (targetPart === 6 && (!getPrizeState().opened || ![5, 7].includes(state.currentPart))) return false;
-      if (targetPart === 7 && state.currentPart !== 6) return false;
+      if (targetPart === 7 && state.currentPart !== 6 && !(state.currentPart === 8 && window.MagicMission?.progress.snapshot().unlocked)) return false;
     }
     state.isTransitioning = true; // Evita avances duplicados por toques rápidos.
     startButton.disabled = true;
@@ -245,7 +250,7 @@
       }
       // Monta una vez: conservar el DOM mantiene la fecha revelada al volver.
       if (!mounted.has(targetPart)) {
-        const renderer = { 2: part2Renderer, 3: part3Renderer, 4: part4Renderer, 5: part5Renderer, 6: part6Renderer, 7: part7Renderer }[targetPart];
+        const renderer = { 2: part2Renderer, 3: part3Renderer, 4: part4Renderer, 5: part5Renderer, 6: part6Renderer, 7: part7Renderer, 8: part8Renderer }[targetPart];
         const cleanup = await renderer(incoming, rendererContext());
         if (typeof cleanup === "function") cleanups.set(targetPart, cleanup);
         mounted.add(targetPart);
@@ -257,7 +262,7 @@
       if (targetPart === 1) welcome.classList.add("revisited");
       state.currentPart = targetPart;
       state.highestUnlocked = Math.max(state.highestUnlocked, targetPart);
-      if (targetPart === 7) state.finished = true;
+      if (targetPart === 7 || targetPart === 8) state.finished = true;
       updateProgress();
       particles.replaceChildren();
       document.dispatchEvent(new CustomEvent("adventure:partchange", { detail: { currentPart: targetPart } }));
@@ -338,6 +343,11 @@
       if (typeof renderer !== "function") throw new TypeError("registerPart7 requiere una función.");
       unmount(7);
       part7Renderer = renderer;
+    },
+    registerPart8(renderer) {
+      if (typeof renderer !== "function") throw new TypeError("registerPart8 requiere una función.");
+      unmount(8);
+      part8Renderer = renderer;
     },
     registerPart6(renderer) {
       if (typeof renderer !== "function") throw new TypeError("registerPart6 requiere una función.");

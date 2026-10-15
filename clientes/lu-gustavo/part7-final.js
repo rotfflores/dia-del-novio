@@ -102,6 +102,7 @@
     photo.addEventListener("error", () => { find(".final-photo").hidden = true; });
     photo.src = config.photo.src;
     find(".final-photo figcaption").textContent = `${config.names.him} + ${config.names.her}`;
+    window.MagicMission?.attachEntry(find(".final-stage"), goToPart);
     // Menú para volver a cualquier parte: ya no hay que pasar por las anteriores.
     find("#final-jump-title").textContent = text.jumpTitle;
     find(".final-jump > p").textContent = text.jumpHint;

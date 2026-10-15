@@ -61,7 +61,7 @@
       begin();
     }, { capture: true, passive: true });
   });
-  begin(); // Reproduce al abrir si el navegador lo permite; si no, al primer toque.
+  // El audio comienza exclusivamente después de una interacción de la persona.
 
   window.AventuraSoundtrack = Object.freeze({ audio, begin, restart, showIn, park, setEnabled });
 })();

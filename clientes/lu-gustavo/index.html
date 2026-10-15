@@ -30,26 +30,29 @@
     <link rel="stylesheet" href="./mensaje.css?v=20261014-lg1" />
     <link rel="stylesheet" href="./flappy.css?v=20261014-lg1" />
     <link rel="stylesheet" href="./final.css?v=20261014-lg1" />
-    <script src="./config.js?v=20261014-lg6" defer></script>
-    <script src="./prize-tools.js?v=20261014-lg6" defer></script>
-    <script src="./app.js?v=20261014-lg6" defer></script>
-    <script src="./whatsapp.js?v=20261014-lg6" defer></script>
-    <script src="./memory-tools.js?v=20261014-lg6" defer></script>
-    <script src="./part2.js?v=20261014-lg6" defer></script>
-    <script src="./gallery-tools.js?v=20261014-lg6" defer></script>
-    <script src="./memorama-tools.js?v=20261014-lg6" defer></script>
-    <script src="./part3-memorama.js?v=20261014-lg6" defer></script>
-    <script src="./maze-engine.js?v=20261014-lg6" defer></script>
-    <script src="./part4.js?v=20261014-lg6" defer></script>
-    <script src="./part5.js?v=20261014-lg6" defer></script>
-    <script src="./platform-engine.js?v=20261014-lg6" defer></script>
-    <script src="./part5-mensaje.js?v=20261014-lg6" defer></script>
-    <script src="./flappy-engine.js?v=20261014-lg6" defer></script>
-    <script src="./part6-flappy.js?v=20261014-lg6" defer></script>
-    <script src="./summary-image.js?v=20261014-lg6" defer></script>
-    <script src="./part7-final.js?v=20261014-lg6" defer></script>
-    <script src="./sounds.js?v=20261014-lg6" defer></script>
-    <script src="./soundtrack.js?v=20261014-lg6" defer></script>
+    <link rel="stylesheet" href="./mission.css?v=20261015-m1" />
+    <script src="./mission-state.js?v=20261015-m1" defer></script>
+    <script src="./config.js?v=20261015-m1" defer></script>
+    <script src="./prize-tools.js?v=20261015-m1" defer></script>
+    <script src="./app.js?v=20261015-m1" defer></script>
+    <script src="./whatsapp.js?v=20261015-m1" defer></script>
+    <script src="./memory-tools.js?v=20261015-m1" defer></script>
+    <script src="./part2.js?v=20261015-m1" defer></script>
+    <script src="./gallery-tools.js?v=20261015-m1" defer></script>
+    <script src="./memorama-tools.js?v=20261015-m1" defer></script>
+    <script src="./part3-memorama.js?v=20261015-m1" defer></script>
+    <script src="./maze-engine.js?v=20261015-m1" defer></script>
+    <script src="./part4.js?v=20261015-m1" defer></script>
+    <script src="./part5.js?v=20261015-m1" defer></script>
+    <script src="./platform-engine.js?v=20261015-m1" defer></script>
+    <script src="./part5-mensaje.js?v=20261015-m1" defer></script>
+    <script src="./flappy-engine.js?v=20261015-m1" defer></script>
+    <script src="./part6-flappy.js?v=20261015-m1" defer></script>
+    <script src="./summary-image.js?v=20261015-m1" defer></script>
+    <script src="./part7-final.js?v=20261015-m1" defer></script>
+    <script src="./sounds.js?v=20261015-m1" defer></script>
+    <script src="./mission.js?v=20261015-m1" defer></script>
+    <script src="./soundtrack.js?v=20261015-m1" defer></script>
   </head>
   <body>
     <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -134,6 +137,7 @@
         <!-- Entrada preparada; la carta de la parte 6 todavía no tiene contenido. -->
         <section id="part-six" class="next-part" aria-labelledby="part-six-title" hidden></section>
         <section id="part-seven" class="final-part" aria-labelledby="part-seven-title" hidden></section>
+        <section id="part-eight" class="magic-mission" aria-labelledby="magic-mission-title" hidden></section>
         <p id="screen-reader-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
         <noscript><p class="noscript-message">Activa JavaScript para comenzar nuestra aventura.</p></noscript>
       </main>
@@ -141,7 +145,7 @@
       <footer class="site-footer">
         <div class="made-with-love"><svg aria-hidden="true"><use href="#heart-outline" /></svg><span data-text="footnote">Hecho con amor, solo para ti</span></div>
         <div class="journey-progress" aria-label="Progreso de nuestra aventura">
-          <span id="progress-label">Parte 1 de 7</span>
+          <span id="progress-label">Parte 1 de 8</span>
           <ol id="progress-steps" class="progress-steps" aria-label="Partes de la aventura"></ol>
         </div>
       </footer>
