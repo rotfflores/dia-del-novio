@@ -27,3 +27,5 @@ El regalo se edita al principio de `mission.js`, en `missionConfig`:
 `mission.css` contiene todos los estilos nuevos, limitados a la misión. No hay dependencias externas ni imágenes oficiales.
 
 Pruebas: instalar `jsdom` como herramienta de desarrollo (no es dependencia del sitio) y ejecutar `node --test tests/mission.test.cjs` desde esta carpeta. Incluyen navegación de los juegos anteriores, finalización real de una ronda, bloqueos, respuestas, persistencia, contenido configurable y ausencia de reproducción al cargar. La simulación DOM a 360 y 1280 píxeles no sustituye una revisión visual en dispositivos reales.
+
+Verificación en navegador realizada a 390, 360 y 1280 píxeles: recorrido de los juegos anteriores, bloqueo si no se juega la ronda final, desbloqueo al terminar una ronda, dos respuestas incorrectas y una correcta del hipogrifo, orden incorrecto y correcto del hechizo, respuesta obligatoria y persistencia tras recargar, notas secuenciales con toque y teclado, persistencia parcial de notas y revelación final. Sin errores de consola ni desbordamiento horizontal en los anchos revisados. El regalo real continúa pendiente de los datos de Lu.

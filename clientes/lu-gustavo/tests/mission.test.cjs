@@ -142,9 +142,14 @@ for (const width of [360, 1280]) {
         for (let i = 1; i < 5; i++) resumed.w.document.querySelector(".mission-note:not(:disabled)").click();
         resumed.w.MagicMission.config.giftTitle = "Una noche de música";
         resumed.w.MagicMission.config.giftDescription = "Nuestra sorpresa configurable";
-        resumed.w.MagicMission.config.eventDate = "Febrero de 2027";
+        resumed.w.MagicMission.config.eventDate = "Marzo de 2027";
+        resumed.w.MagicMission.config.giftImage = "./assets/pareja.jpeg";
         resumed.click("Descubrir la sorpresa");
         assert(resumed.w.document.querySelector(".mission-gift").textContent.includes("Una noche de música"));
+        assert(resumed.w.document.querySelector(".mission-final-letter").textContent.includes("Marzo de 2027 tenemos una cita mágica."));
+        assert(resumed.w.document.querySelector(".mission-gift img").src.endsWith("/assets/pareja.jpeg"));
+        resumed.w.document.querySelector(".mission-gift img").dispatchEvent(new resumed.w.Event("error"));
+        assert(resumed.w.document.querySelector(".mission-gift .mission-art-ticket"), "si falla la imagen aparece el sobre original");
         assert(resumed.w.document.querySelector(".mission-final-letter").textContent.includes("Tu compañera de aventuras, Lu."));
         assert.equal(resumed.w.document.querySelector(".mission-written-memory blockquote").textContent, input.value);
         assert.equal(resumed.w.document.querySelector(".mission-written-memory img"), null, "la respuesta se inserta como texto");

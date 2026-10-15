@@ -29,7 +29,7 @@
       </header>
       <div class="maze-session" aria-label="Laberinto del amor">
         <div class="maze-toolbar">
-          <span class="maze-small-title">Laberinto del amor <small>4 / 7</small></span>
+          <span class="maze-small-title">Laberinto del amor <small>4 / ${config.totalParts}</small></span>
           <div class="maze-tools">
             <button type="button" class="maze-sound" aria-pressed="true">Sonido: sí</button>
             <button type="button" class="maze-pause" disabled>Pausa</button>
