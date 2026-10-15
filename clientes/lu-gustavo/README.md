@@ -13,6 +13,8 @@ Copia independiente para su primer aniversario. Inicio de la relación: 14 de oc
 
 ## Misión mágica (parte 8)
 
+Acceso temporal para revisar sin jugar: añadir `?revision=mision` al enlace de la página. Abre directamente la bienvenida de la misión. Su progreso se guarda en una clave separada terminada en `-revision`, de modo que no desbloquea la misión del recorrido normal. Retirar el bloque `reviewMode` de `mission.js` al terminar la revisión.
+
 El último juego es infinito. Una ronda terminada, incluso con cero puntos, desbloquea la misión. Usar «Terminar la aventura» antes de jugar conserva la celebración original, pero no desbloquea la misión. Después del desbloqueo aparece también «Continuar la misión mágica» en la bienvenida para retomar tras una recarga.
 
 El regalo se edita al principio de `mission.js`, en `missionConfig`:

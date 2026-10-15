@@ -53,8 +53,8 @@ test("datos dañados y almacenamiento bloqueado no rompen la experiencia", () =>
 // Pruebas de integración del DOM sin dependencias en la página publicada.
 // JSDOM se instala únicamente como herramienta externa de desarrollo.
 const { JSDOM } = require("jsdom");
-function harness(width = 390, saved = null) {
-  const dom = new JSDOM(fs.readFileSync(path.join(root, "index.html"), "utf8"), { url: "https://dia-del-novio.rotfstudio.com/clientes/lu-gustavo/", runScripts: "outside-only", pretendToBeVisual: true });
+function harness(width = 390, saved = null, review = false) {
+  const dom = new JSDOM(fs.readFileSync(path.join(root, "index.html"), "utf8"), { url: "https://dia-del-novio.rotfstudio.com/clientes/lu-gustavo/" + (review ? "?revision=mision" : ""), runScripts: "outside-only", pretendToBeVisual: true });
   const w = dom.window, errors = [], frames = new Map(); let nextId = 1, played = 0;
   Object.defineProperty(w, "innerWidth", { value: width });
   w.matchMedia = () => ({ matches: true, addEventListener() {}, removeEventListener() {} });
@@ -81,6 +81,19 @@ function harness(width = 390, saved = null) {
     frame(time) { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach((fn) => fn(time)); } };
 }
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
+test("acceso temporal directo sin desbloquear ni sobrescribir el progreso normal", async () => {
+  const normal = { unlocked: false, answer: "", completed: 0 };
+  const h = harness(390, normal, true);
+  try {
+    await flush();
+    assert.equal(h.w.Aventura.currentPart, 8);
+    assert.equal(h.w.document.querySelector("#magic-mission-title").textContent, "Una nueva misión");
+    assert.deepEqual(JSON.parse(h.w.localStorage.getItem(State.KEY)), normal);
+    assert.equal(JSON.parse(h.w.localStorage.getItem(State.KEY + "-revision")).unlocked, true);
+    assert.equal(h.played, 0);
+    assert.deepEqual(h.errors, []);
+  } finally { h.dom.window.close(); }
+});
 async function reachLastGame(h) {
   const { w } = h;
   assert(await w.Aventura.goToPart2());

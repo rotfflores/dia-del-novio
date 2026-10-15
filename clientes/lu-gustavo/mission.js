@@ -11,9 +11,15 @@ const missionConfig = {
 
 (() => {
   "use strict";
+  // Acceso temporal de revisión. Quitar este modo cuando termine la revisión.
+  const reviewMode = new URLSearchParams(window.location.search).get("revision") === "mision";
   let storage = null;
   try { storage = window.localStorage; } catch { /* La misión funciona en memoria. */ }
-  const progress = window.MissionState.create(storage);
+  const missionStorage = reviewMode && storage ? {
+    getItem: (key) => storage.getItem(`${key}-revision`),
+    setItem: (key, value) => storage.setItem(`${key}-revision`, value),
+  } : storage;
+  const progress = window.MissionState.create(missionStorage);
   const titles = ["La prueba del hipogrifo", "El misterio del tiempo", "El encantamiento protector", "El secreto final"];
   const symbols = ["✧", "⌛", "✦", "♫"];
   const success = ["El hipogrifo acepta tu respeto. El camino continúa.", "Hay momentos que merecen vivirse más de una vez.", "Tu recuerdo feliz ha iluminado el camino."];
@@ -64,6 +70,7 @@ const missionConfig = {
       if (!state.unlocked) return;
       container.replaceChildren();
       const shell = node("div", "", "mission-shell");
+      if (reviewMode) shell.append(node("p", "Modo de revisión temporal · Progreso de prueba independiente", "mission-kicker"));
       shell.append(node("p", "Gus + Lu · La aventura continúa", "mission-kicker"));
       const screen = node("div", "", "mission-screen");
       shell.append(screen);
@@ -214,4 +221,8 @@ const missionConfig = {
     return () => document.removeEventListener("adventure:partchange", update);
   });
   attachEntry(document.querySelector(".welcome-copy"), window.Aventura.goToPart, true);
+  if (reviewMode) {
+    unlock();
+    void window.Aventura.goToPart(8);
+  }
 })();
