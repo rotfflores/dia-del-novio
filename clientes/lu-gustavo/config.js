@@ -1,22 +1,22 @@
-/* Datos exclusivos de Lu y Gustavo. WhatsApp pendiente. */
+/* Datos exclusivos de Lu y Gus. WhatsApp pendiente. */
 window.COUPLE_CONFIG = {
   "names": {
     "her": "Lu",
-    "him": "Gustavo"
+    "him": "Gus"
   },
   "photo": {
     "src": "./assets/pareja.jpeg",
-    "alt": "Lu y Gustavo compartiendo un beso junto a una fuente",
+    "alt": "Lu y Gus compartiendo un beso junto a una fuente",
     "fit": "contain",
     "position": "50% 50%"
   },
   "text": {
-    "pageTitle": "Lu + Gustavo · Nuestro primer aniversario",
+    "pageTitle": "Lu + Gus · Nuestro primer aniversario",
     "occasion": "Primer aniversario",
     "eyebrow": "Una historia, dos protagonistas",
     "title": "Nuestra aventura comienza aquí",
     "titleAccent": "comienza aquí",
-    "message": "Gustavo, hoy celebramos nuestro primer año juntos. Preparé esta aventura para recordar lo bonito que es compartir la vida contigo. ¿Estás listo?",
+    "message": "Gus, hoy celebramos nuestro primer año juntos. Preparé esta aventura para recordar lo bonito que es compartir la vida contigo. ¿Estás listo?",
     "button": "Comenzar nuestra aventura ❤️",
     "startNote": "Nuestra canción intentará sonar al abrir; si tu navegador lo impide, toca para escucharla",
     "photoCaption": "Mi lugar favorito en el mundo es donde estés tú.",
@@ -37,8 +37,8 @@ window.COUPLE_CONFIG = {
       "day": 14
     },
     "photo": {
-      "src": "./fotos/recuerdo-02.jpeg",
-      "alt": "Lu y Gustavo sonriendo frente a unas pirámides",
+      "src": "./assets/fecha-carrusel.jpeg",
+      "alt": "Lu y Gus en una selfie junto a un carrusel iluminado",
       "fit": "contain",
       "position": "50% 50%"
     },
@@ -84,7 +84,7 @@ window.COUPLE_CONFIG = {
       "completedMessage": "Encontraste todos nuestros recuerdos en {moves} intentos."
     },
     "letter": {
-      "title": "Una carta para Gustavo",
+      "title": "Una carta para Gus",
       "greeting": "Mi amor, feliz primer aniversario. ❤️",
       "paragraphs": [
         "Hoy cumplimos nuestro primer año juntos y, aunque un año pueda parecer poco tiempo en comparación con toda una vida, para mí ha sido suficiente para darme cuenta de lo bonito que es compartir mis días contigo y de lo importante que te has vuelto para mí.",
@@ -110,7 +110,7 @@ window.COUPLE_CONFIG = {
         "clue": "Nuestro beso",
         "photo": {
           "src": "./fotos/recuerdo-01.jpeg",
-          "alt": "Lu y Gustavo compartiendo un beso junto a una fuente",
+          "alt": "Lu y Gus compartiendo un beso junto a una fuente",
           "fit": "contain",
           "position": "50% 65%"
         },
@@ -123,7 +123,7 @@ window.COUPLE_CONFIG = {
         "clue": "De aventura",
         "photo": {
           "src": "./fotos/recuerdo-02.jpeg",
-          "alt": "Lu y Gustavo en una selfie frente a unas pirámides",
+          "alt": "Lu y Gus en una selfie frente a unas pirámides",
           "fit": "contain",
           "position": "50% 65%"
         },
@@ -136,7 +136,7 @@ window.COUPLE_CONFIG = {
         "clue": "Celebrar contigo",
         "photo": {
           "src": "./fotos/recuerdo-03.jpeg",
-          "alt": "Lu y Gustavo con sombreros, sonriendo en una celebración con música",
+          "alt": "Lu y Gus con sombreros, sonriendo en una celebración con música",
           "fit": "contain",
           "position": "50% 65%"
         },
@@ -149,7 +149,7 @@ window.COUPLE_CONFIG = {
         "clue": "Siempre a tu lado",
         "photo": {
           "src": "./fotos/recuerdo-04.jpeg",
-          "alt": "Lu y Gustavo juntos en una terraza, él con sombrero y ella con un vestido a rayas",
+          "alt": "Lu y Gus juntos en una terraza, él con sombrero y ella con un vestido a rayas",
           "fit": "contain",
           "position": "50% 60%"
         },
@@ -162,7 +162,7 @@ window.COUPLE_CONFIG = {
         "clue": "Una noche juntos",
         "photo": {
           "src": "./fotos/recuerdo-05.jpeg",
-          "alt": "Lu y Gustavo en una selfie nocturna junto a un carrusel iluminado",
+          "alt": "Lu y Gus en una selfie nocturna junto a un carrusel iluminado",
           "fit": "contain",
           "position": "60% 65%"
         },
@@ -175,7 +175,7 @@ window.COUPLE_CONFIG = {
         "clue": "Nuestras sonrisas",
         "photo": {
           "src": "./fotos/recuerdo-06.jpeg",
-          "alt": "Lu y Gustavo sonriendo juntos bajo unos arcos de piedra y ladrillo",
+          "alt": "Lu y Gus sonriendo juntos bajo unos arcos de piedra y ladrillo",
           "fit": "contain",
           "position": "50% 65%"
         },
@@ -188,7 +188,7 @@ window.COUPLE_CONFIG = {
         "clue": "Más caminos juntos",
         "photo": {
           "src": "./fotos/recuerdo-07.jpeg",
-          "alt": "Lu y Gustavo de pie frente a unas pirámides en un día soleado",
+          "alt": "Lu y Gus de pie frente a unas pirámides en un día soleado",
           "fit": "contain",
           "position": "48% 70%"
         },
@@ -219,7 +219,7 @@ window.COUPLE_CONFIG = {
     },
     "photo": {
       "src": "./assets/pareja.jpeg",
-      "alt": "Lu y Gustavo juntos",
+      "alt": "Lu y Gus juntos",
       "fit": "contain",
       "position": "50% 50%",
       "caption": "Mi premio favorito es compartir la vida contigo."
@@ -247,7 +247,7 @@ window.COUPLE_CONFIG = {
     "title": "Nuestra canción",
     "introduction": "Una canción para celebrar nuestro primer año juntos.",
     "kicker": "Una canción para ti",
-    "dedication": "Gustavo, quiero seguir creciendo a tu lado y seguir encontrando maneras de cuidar lo que estamos construyendo.",
+    "dedication": "Gus, quiero seguir creciendo a tu lado y seguir encontrando maneras de cuidar lo que estamos construyendo.",
     "links": {
       "spotify": "",
       "appleMusic": "",
@@ -268,7 +268,7 @@ window.COUPLE_CONFIG = {
       "Gracias por nuestro primer año",
       "Más viajes y aventuras juntos",
       "Volvería a elegir conocerte",
-      "Lu y Gustavo",
+      "Lu y Gus",
       "Desde el 14 de octubre de 2025",
       "Quiero seguir creciendo a tu lado",
       "Tus sueños tienen un lugar en mi corazón"
@@ -277,7 +277,7 @@ window.COUPLE_CONFIG = {
   "final": {
     "title": "Misión cumplida",
     "subtitle": "Feliz primer aniversario",
-    "message": "Gustavo, desde el 14 de octubre de 2025 estamos escribiendo una historia que me hace muy feliz. Gracias por nuestro primer año, por cada risa, cada abrazo y cada recuerdo. Por todo lo que hemos construido y por todos los sueños, viajes y aventuras que todavía nos esperan. Qué bonito coincidir contigo en esta vida. Te amo muchísimo. ❤️",
+    "message": "Gus, desde el 14 de octubre de 2025 estamos escribiendo una historia que me hace muy feliz. Gracias por nuestro primer año, por cada risa, cada abrazo y cada recuerdo. Por todo lo que hemos construido y por todos los sueños, viajes y aventuras que todavía nos esperan. Qué bonito coincidir contigo en esta vida. Te amo muchísimo. ❤️",
     "signature": "Con todo mi amor, Lu"
   },
   "whatsapp": {

@@ -33,5 +33,5 @@ http.createServer(async (request, response) => {
   } catch (error) {
     response.writeHead(error.code === "ENOENT" ? 404 : 400).end("Not found");
   }
-}).listen(port, "127.0.0.1", () => console.log(`Lu + Gustavo: http://127.0.0.1:${port}`));
+}).listen(port, "127.0.0.1", () => console.log(`Lu + Gus: http://127.0.0.1:${port}`));
 

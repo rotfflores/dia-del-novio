@@ -1,8 +1,8 @@
-# Lu + Gustavo
+# Lu + Gus
 
 Copia independiente para su primer aniversario. Inicio de la relación: 14 de octubre de 2025.
 
-- Foto 1: portada. Foto 2: fecha. Siete fotos en el memorama.
+- Foto 1: portada. Foto del carrusel enviada después: junto a la fecha. Siete fotos en el memorama.
 - Carta completa entregada por Lu.
 - Canción: Perfect Symphony, Ed Sheeran con Andrea Bocelli, versión del archivo «Lyrics» proporcionado por el cliente. Audio integrado; intenta reproducirse al abrir o con el primer toque.
 - Regalo sorpresa: «Vale por una cena juntos».
